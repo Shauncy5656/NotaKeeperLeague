@@ -1,0 +1,28 @@
+NotaKeeperLeague 1.0 — Deployment Package
+
+Recommended: deploy this folder as a static HTTPS website.
+
+NETLIFY DROP
+1. Unzip NotaKeeperLeague-1.0-Deploy.zip on a computer.
+2. Open Netlify Drop in a browser.
+3. Drag the entire NotaKeeperLeague-1.0-Deploy folder onto the deployment page.
+4. Netlify will give the app a permanent HTTPS URL.
+5. Open that URL on the iPhone in Safari.
+6. In NotaKeeperLeague, go to Live Sync -> TEST LIVE CONNECTIONS.
+7. Confirm Sleeper and Consensus Ranking Feed show OK.
+8. In Safari use Share -> Add to Home Screen.
+
+OTHER STATIC HOSTS
+The package also works on GitHub Pages, Cloudflare Pages, Vercel static hosting,
+or any HTTPS server that serves index.html from the site root.
+
+DRAFT NIGHT
+1. Open the permanent app URL while online.
+2. Test Live Connections.
+3. Refresh All Live Data.
+4. Review quarantined updates.
+5. Prepare for Draft Night.
+6. Confirm DATA LOCKED.
+7. Use the Draft Night screen.
+
+DESIGN: NotaKeeperLeague 1.1 uses its own charcoal / ivory / burnt-orange stadium-scoreboard theme and is intentionally different from the other football app.
