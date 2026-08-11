@@ -37,17 +37,48 @@ input,select{width:100%;background:#101010;color:var(--cream);border:1px solid #
 .queuebtn{font-size:8px;padding:6px 8px}.queued{color:var(--gold)}
 #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#f3eadb;color:#090909;padding:9px 12px;font-size:9px;font-weight:900;display:none;z-index:99}
 @media(max-width:620px){header{grid-template-columns:46px 1fr}.livebadge{display:none}.title{font-size:21px}nav{grid-template-columns:repeat(6,92px)}}
+
+.boardWrap{overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid #37322b;background:#0f0f0f}
+.boardTable{border-collapse:separate;border-spacing:0;min-width:1180px;width:100%}
+.boardTable th,.boardTable td{border-right:1px solid #302b26;border-bottom:1px solid #302b26;padding:6px;vertical-align:top}
+.boardTable th{position:sticky;top:0;background:#191714;color:var(--cream);font-size:8px;z-index:2;text-align:center}
+.boardTable th:first-child{left:0;z-index:3}
+.boardTable td:first-child{position:sticky;left:0;background:#181613;color:var(--orange);font-weight:900;text-align:center;min-width:48px;z-index:1}
+.boardCell{min-width:88px;height:48px}
+.boardPick{font-size:7px;color:var(--muted)}
+.boardPlayer{font-size:8px;font-weight:900;line-height:1.1;margin-top:2px}
+.boardPos{font-size:7px;color:var(--ice);margin-top:2px}
+.boardMine{background:#21170f!important;box-shadow:inset 0 0 0 1px var(--orange)}
+.teamPickerRow{display:grid;grid-template-columns:1fr;gap:8px}
+.roundRow{display:grid;grid-template-columns:42px 56px 1fr 42px;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #2a2723}
+.roundRow:last-child{border-bottom:0}
+.roundNum{font-weight:900;color:var(--orange)}
+.pickNum{font-size:8px;color:var(--muted)}
+.emptyPick{color:#6f685f;font-size:8px}
+
+
+.recGrid{display:grid;grid-template-columns:1fr;gap:8px}
+.recCard{background:#111;border:1px solid #3d352e;border-left:4px solid var(--orange);padding:12px}
+.recLabel{font-size:7px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--orange)}
+.recName{font:900 24px Impact,Arial Black,sans-serif;margin-top:3px}
+.recWhy{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}
+.recMetrics{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.recMetric{font-size:7px;padding:4px 6px;border:1px solid #43392f;background:#171513}
+.waitBox{background:#15120e;border:1px solid #5f4727;padding:10px;margin-top:9px}
+.waitTitle{font-size:8px;color:var(--gold);font-weight:900;text-transform:uppercase}
+.urgencyHigh{color:var(--red)}.urgencyMed{color:var(--gold)}.urgencyLow{color:var(--ice)}
+
 </style>
 </head>
 <body>
-<header><div class="logo">NKL</div><div><div class="title">NotaKeeperLeague</div><div class="sub">LITE // DRAFT ROOM 2026</div></div><div class="livebadge">MOBILE FIRST</div></header>
+<header><div class="logo">NKL</div><div><div class="title">NotaKeeperLeague</div><div class="sub">LITE 1.2 // DRAFT ROOM 2026</div></div><div class="livebadge">MOBILE FIRST</div></header>
 <nav>
-<button class="tab active" data-view="draft">Draft</button><button class="tab" data-view="players">Players</button><button class="tab" data-view="teams">Teams</button><button class="tab" data-view="gameday">Draft Night</button><button class="tab" data-view="sync">Live Sync</button><button class="tab" data-view="settings">Settings</button>
+<button class="tab active" data-view="draft">Draft</button><button class="tab" data-view="players">Players</button><button class="tab" data-view="board">Draft Board</button><button class="tab" data-view="teams">Teams</button><button class="tab" data-view="gameday">Draft Night</button><button class="tab" data-view="sync">Live Sync</button><button class="tab" data-view="settings">Settings</button>
 </nav>
 
 <section id="draft" class="view active">
 <div class="card"><div class="kicker">Current Draft</div><div id="draftSituation"></div></div>
-<div class="card"><div class="kicker">Best Pick Right Now</div><div id="bestPick"></div></div>
+<div class="card"><div class="kicker">Draft Recommendation</div><div id="bestPick"></div></div>
 <div class="card"><div class="kicker">Top 8 Available</div><div id="topAvailable"></div></div>
 <div class="card"><div class="kicker">Recent Picks</div><div id="recentPicks"></div></div>
 </section>
@@ -56,13 +87,34 @@ input,select{width:100%;background:#101010;color:var(--cream);border:1px solid #
 <div class="card"><div class="kicker">Player Search</div><input id="playerSearch" placeholder="Search player name"><div class="filters" id="positionFilters"></div><div id="playerList"></div></div>
 </section>
 
+
+<section id="board" class="view">
+<div class="card">
+  <div class="kicker">Full Draft Overview</div>
+  <h2>Draft Board</h2>
+  <div class="muted">12 teams · 16 rounds · snake order. Swipe horizontally to see the entire room.</div>
+  <div id="draftBoard" style="margin-top:10px"></div>
+</div>
+</section>
+
 <section id="teams" class="view">
-<div class="card"><div class="kicker">12-Team Room</div><div id="teamsList"></div></div>
+<div class="card">
+  <div class="kicker">Team Round-by-Round</div>
+  <div class="teamPickerRow">
+    <select id="teamPickSelector"></select>
+  </div>
+  <div id="selectedTeamSummary" style="margin-top:10px"></div>
+  <div id="teamRoundPicks"></div>
+</div>
+<div class="card">
+  <div class="kicker">12-Team Room Needs</div>
+  <div id="teamsList"></div>
+</div>
 </section>
 
 <section id="gameday" class="view">
 <div class="card"><div class="kicker">Draft Night</div><div id="gameSituation"></div></div>
-<div class="card"><div class="kicker">Recommendation</div><div id="gameRecommendation"></div></div>
+<div class="card"><div class="kicker">Next Best Pick</div><div id="gameRecommendation"></div></div>
 <div class="card"><div class="kicker">Quick Search</div><input id="gameSearch" placeholder="Search available player"><div id="gameSearchResults"></div></div>
 <div class="card"><div class="kicker">My Queue</div><div id="gameQueue"></div></div>
 <div class="card"><div class="kicker">Opponent Position Pressure</div><div id="positionPressure"></div></div>
@@ -98,27 +150,249 @@ function needScore(pos,team=myTeam()){let c=counts(team);if(pos==='QB')return c.
 function statusFlag(p){return state.flags[p.id]||'OK'}
 function statusMult(p){let s=statusFlag(p);return s==='IR'?.58:s==='OUT'?.80:s==='Q'?.96:s==='SUSP'?.75:1}
 function valueScore(p){return Number(p.consensus||0)*needScore(p.pos)*statusMult(p) + Math.max(0,35-Number(p.marketRank||p.rank||999))*.35}
-function bestAvailable(){let a=available(),best=null,b=-1e9;for(let p of a){let s=valueScore(p);if(s>b){b=s;best=p}}return best}
-function topAvailable(n=8){return available().map(p=>[valueScore(p),p]).sort((a,b)=>b[0]-a[0]).slice(0,n).map(x=>x[1])}
-function needsText(team){let c=counts(team),n=[];if(c.QB<1)n.push('QB');if(c.RB<2)n.push('RB');if(c.WR<2)n.push('WR');if(c.TE<1)n.push('TE');if(roundOf(state.pick)>=12&&c.K<1)n.push('K');if(roundOf(state.pick)>=12&&c.DEF<1)n.push('DEF');return n.length?n.join(' Â· '):'Core filled'}
-function playerRow(p,actions=true){let q=state.queue.includes(p.id),flag=statusFlag(p);return `<div class="row"><div style="display:flex;gap:8px;align-items:center;min-width:0"><div class="pos">${p.pos}</div><div><div class="name">${p.name}</div><div class="meta">${p.team||'FA'} Â· Rank #${p.rank} Â· ${Math.round(p.consensus)} pts${flag!=='OK'?` Â· ${flag}`:''}</div></div></div><div style="display:flex;gap:5px;align-items:center">${actions?`<button class="btn queuebtn" data-q="${p.id}">${q?'â':'â'}</button><button class="btn primary queuebtn" data-pick="${p.id}">Draft</button>`:''}<span class="score">${Math.round(valueScore(p))}</span></div></div>`}
+
+function maxRequiredStarters(pos){
+  return pos==='QB'?1:pos==='RB'?2:pos==='WR'?2:pos==='TE'?1:pos==='K'?1:pos==='DEF'?1:0;
+}
+function nextMyPickAfter(current){
+  let slot=(state.mySlot||1)-1;
+  for(let p=current+1;p<=192;p++) if(pickTeam(p)===slot) return p;
+  return null;
+}
+function teamsBeforeMyNextPick(){
+  let next=nextMyPickAfter(state.pick),out=[];
+  if(!next)return out;
+  for(let p=state.pick+1;p<next;p++){
+    let ti=pickTeam(p);
+    if(!out.includes(ti))out.push(ti);
+  }
+  return out;
+}
+function posNeedCount(pos,team){
+  let c=counts(team);
+  if(pos==='QB')return c.QB<1?1:0;
+  if(pos==='RB')return c.RB<2?2-c.RB:(c.RB<4?1:0);
+  if(pos==='WR')return c.WR<2?2-c.WR:(c.WR<5?1:0);
+  if(pos==='TE')return c.TE<1?1:0;
+  if(pos==='K')return roundOf(state.pick)>=13&&c.K<1?1:0;
+  if(pos==='DEF')return roundOf(state.pick)>=13&&c.DEF<1?1:0;
+  return 0;
+}
+function roomDemand(pos){
+  let teams=teamsBeforeMyNextPick(),d=0;
+  for(let ti of teams) if(posNeedCount(pos,state.teams[ti])>0)d++;
+  return {teams:teams.length,need:d};
+}
+function positionalPool(pos){
+  return available().filter(p=>p.pos===pos).sort((a,b)=>Number(b.consensus||0)-Number(a.consensus||0));
+}
+function replacementPlayer(pos){
+  let pool=positionalPool(pos);
+  // replacement horizon approximates what may still be there at your next selection
+  let rd=roomDemand(pos),horizon=Math.max(2,Math.min(pool.length-1,rd.need+3));
+  return pool[horizon]||pool[pool.length-1]||null;
+}
+function vorScore(p){
+  let rep=replacementPlayer(p.pos);
+  return rep?Math.max(0,Number(p.consensus||0)-Number(rep.consensus||0)):0;
+}
+function tierDrop(p){
+  let pool=positionalPool(p.pos);
+  let idx=pool.findIndex(x=>x.id===p.id);
+  if(idx<0)return 0;
+  let next=pool[idx+1],next2=pool[idx+2];
+  let drop=0;
+  if(next)drop+=Math.max(0,Number(p.consensus||0)-Number(next.consensus||0));
+  if(next2)drop+=Math.max(0,(Number(p.consensus||0)-Number(next2.consensus||0))*.35);
+  return drop;
+}
+function starterNeedBoost(p){
+  let c=counts(myTeam()),starter=maxRequiredStarters(p.pos);
+  if(starter===0)return 1;
+  if((c[p.pos]||0)<starter)return 1.18;
+  if(p.pos==='RB' && c.RB<4)return 1.06;
+  if(p.pos==='WR' && c.WR<5)return 1.06;
+  if(p.pos==='QB' && c.QB>=1)return .84;
+  if(p.pos==='TE' && c.TE>=1)return .88;
+  return 1;
+}
+function roundPositionPenalty(p){
+  let r=roundOf(state.pick);
+  if((p.pos==='K'||p.pos==='DEF') && r<12)return .48;
+  if(p.pos==='QB' && r<=3){
+    let pool=positionalPool('QB'),idx=pool.findIndex(x=>x.id===p.id);
+    // don't ban elite QB, but require a real edge
+    if(idx>2)return .82;
+  }
+  if(p.pos==='TE' && r<=3){
+    let pool=positionalPool('TE'),idx=pool.findIndex(x=>x.id===p.id);
+    if(idx>2)return .88;
+  }
+  return 1;
+}
+function survivalProbability(p){
+  let rd=roomDemand(p.pos);
+  let pool=positionalPool(p.pos),idx=pool.findIndex(x=>x.id===p.id);
+  if(idx<0)return .5;
+  let next=nextMyPickAfter(state.pick);
+  if(!next)return 0;
+  let picksAway=Math.max(1,next-state.pick);
+  // demand from teams between picks + market rank proximity
+  let marketPressure=Math.max(0,Math.min(1,(picksAway+8-Number(p.marketRank||999))/20));
+  let demandPressure=rd.teams?rd.need/rd.teams:0;
+  let depthRelief=Math.min(.35,idx*.04);
+  let survive=.72 - demandPressure*.42 - marketPressure*.28 + depthRelief;
+  return Math.max(.05,Math.min(.95,survive));
+}
+function scarcityScore(p){
+  let pool=positionalPool(p.pos);
+  let idx=pool.findIndex(x=>x.id===p.id);
+  if(idx<0)return 0;
+  let top=Number(pool[0]?.consensus||p.consensus||0);
+  let later=Number(pool[Math.min(pool.length-1,idx+5)]?.consensus||0);
+  return Math.max(0,top-later);
+}
+function draftScore(p){
+  let quality=Number(p.consensus||0);
+  let vor=vorScore(p);
+  let tier=tierDrop(p);
+  let scarcity=scarcityScore(p);
+  let survive=survivalProbability(p);
+  let rd=roomDemand(p.pos);
+  let demand=rd.teams?rd.need/rd.teams:0;
+  let base=quality*.38 + vor*1.45 + tier*1.15 + scarcity*.28 + (1-survive)*36 + demand*22;
+  base*=starterNeedBoost(p)*roundPositionPenalty(p)*statusMult(p);
+  return base;
+}
+function rankedRecommendations(limit=10){
+  let arr=available().map(p=>({p,score:draftScore(p),vor:vorScore(p),tier:tierDrop(p),survive:survivalProbability(p),demand:roomDemand(p.pos)}));
+  arr.sort((a,b)=>b.score-a.score);
+  return arr.slice(0,limit);
+}
+function bestAvailable(){
+  return rankedRecommendations(1)[0]?.p||null;
+}
+function bestValueCandidate(){
+  let arr=available().map(p=>({p,val:vorScore(p)+(Math.max(0,Number(p.marketRank||999)-Number(p.rank||999))*.7)}))
+    .sort((a,b)=>b.val-a.val);
+  return arr[0]?.p||null;
+}
+function safeAlternative(primary){
+  let recs=rankedRecommendations(12);
+  return recs.find(x=>x.p.id!==primary?.id && x.p.pos!==primary?.pos)?.p || recs.find(x=>x.p.id!==primary?.id)?.p || null;
+}
+function waitAdvice(){
+  let msgs=[];
+  for(let pos of ['QB','TE']){
+    let pool=positionalPool(pos);
+    if(!pool.length)continue;
+    let top=pool[0],rep=pool[Math.min(pool.length-1,5)];
+    let drop=Number(top.consensus||0)-Number(rep.consensus||0);
+    let rd=roomDemand(pos);
+    let c=counts(myTeam());
+    let filled=(pos==='QB'?c.QB:c.TE)>=1;
+    if(filled || (roundOf(state.pick)<=5 && drop<45 && rd.need<=Math.max(2,Math.floor(rd.teams*.45)))){
+      msgs.push(`WAIT ON ${pos} · ${Math.min(6,pool.length)} viable options remain and room demand before your next pick is ${rd.need}/${rd.teams||0}.`);
+    }
+  }
+  return msgs.slice(0,2);
+}
+function recommendationReason(p){
+  let vor=Math.round(vorScore(p)),tier=Math.round(tierDrop(p)),surv=Math.round(survivalProbability(p)*100),rd=roomDemand(p.pos);
+  let reasons=[];
+  if(vor>=25)reasons.push(`+${vor} pts over likely replacement`);
+  if(tier>=12)reasons.push(`tier drop after this player is meaningful`);
+  if(surv<=40)reasons.push(`only ~${surv}% chance to survive to your next pick`);
+  if(rd.need>=3)reasons.push(`${rd.need} teams before your next pick need ${p.pos}`);
+  if((p.pos==='RB'||p.pos==='WR') && starterNeedBoost(p)>1.1)reasons.push(`fills a core starting spot`);
+  if(!reasons.length)reasons.push(`best overall balance of value, roster fit and return probability`);
+  return reasons.join(' · ');
+}
+function recommendationHTML(){
+  let recs=rankedRecommendations(10),primary=recs[0]?.p;
+  if(!primary)return '<div class="muted">Draft complete.</div>';
+  let value=bestValueCandidate(),safe=safeAlternative(primary),waits=waitAdvice();
+  let one=(label,p)=>p?`<div class="recCard"><div class="recLabel">${label}</div><div class="recName">${p.name}</div><div class="meta">${p.pos} · ${p.team||'FA'} · ${Math.round(p.consensus)} projected pts · market #${p.marketRank}</div><div class="recWhy">${recommendationReason(p)}</div><div class="recMetrics"><span class="recMetric">VOR +${Math.round(vorScore(p))}</span><span class="recMetric">Return chance ${Math.round(survivalProbability(p)*100)}%</span><span class="recMetric">Room need ${roomDemand(p.pos).need}/${roomDemand(p.pos).teams||0}</span></div><div style="margin-top:8px"><button class="btn primary" data-pick="${p.id}">Draft</button> <button class="btn" data-q="${p.id}">${state.queue.includes(p.id)?'Remove Queue':'Add Queue'}</button></div></div>`:'';
+  return `<div class="recGrid">${one('🏆 Best Team-Building Pick',primary)}${one('🔥 Best Value',value?.id===primary.id?safe:value)}${one('🎯 Safe Alternative',safe)}</div>${waits.length?`<div class="waitBox"><div class="waitTitle">What to wait on</div><div class="recWhy">${waits.join('<br>')}</div></div>`:''}`;
+}
+
+function topAvailable(n=8){return rankedRecommendations(n).map(x=>x.p)}
+function needsText(team){let c=counts(team),n=[];if(c.QB<1)n.push('QB');if(c.RB<2)n.push('RB');if(c.WR<2)n.push('WR');if(c.TE<1)n.push('TE');if(roundOf(state.pick)>=12&&c.K<1)n.push('K');if(roundOf(state.pick)>=12&&c.DEF<1)n.push('DEF');return n.length?n.join(' · '):'Core filled'}
+function playerRow(p,actions=true){let q=state.queue.includes(p.id),flag=statusFlag(p);return `<div class="row"><div style="display:flex;gap:8px;align-items:center;min-width:0"><div class="pos">${p.pos}</div><div><div class="name">${p.name}</div><div class="meta">${p.team||'FA'} · Rank #${p.rank} · ${Math.round(p.consensus)} pts${flag!=='OK'?` · ${flag}`:''}</div></div></div><div style="display:flex;gap:5px;align-items:center">${actions?`<button class="btn queuebtn" data-q="${p.id}">${q?'★':'☆'}</button><button class="btn primary queuebtn" data-pick="${p.id}">Draft</button>`:''}<span class="score">${Math.round(draftScore(p))}</span></div></div>`}
 function record(pid){if(state.pick>192)return;let p=PLAYERS.find(x=>x.id===pid);if(!p||draftedIds().has(pid))return;let ti=pickTeam(state.pick);if(state.teams[ti].players.length>=16)return toast('Team roster is full');state.teams[ti].players.push({...p,pick:state.pick});state.log.push({pick:state.pick,team:ti,pid:p.id,name:p.name,pos:p.pos});state.queue=state.queue.filter(x=>x!==pid);state.pick++;save();renderCurrent()}
 function removeLast(){let x=state.log.pop();if(!x)return;state.pick=x.pick;state.teams[x.team].players=state.teams[x.team].players.filter(p=>p.id!==x.pid);save();renderCurrent()}
 function toggleQueue(id){state.queue=state.queue.includes(id)?state.queue.filter(x=>x!==id):[...state.queue,id];save();renderCurrent()}
-function renderDraft(){let ti=pickTeam(state.pick),bp=bestAvailable();document.getElementById('draftSituation').innerHTML=`<div class="grid3"><div class="stat"><b>#${state.pick}</b><span>PICK</span></div><div class="stat"><b>R${roundOf(state.pick)}</b><span>ROUND</span></div><div class="stat"><b>${state.teams[ti]?.name||'â'}</b><span>ON CLOCK</span></div></div><div style="margin-top:8px"><button class="btn" onclick="removeLast()">Undo Last Pick</button></div>`;document.getElementById('bestPick').innerHTML=bp?`<div class="quickpick"><div class="heroName">${bp.name}</div><div class="muted">${bp.pos} Â· ${bp.team} Â· projected ${Math.round(bp.consensus)} Â· market #${bp.marketRank}</div><div style="margin-top:10px"><button class="btn primary" data-pick="${bp.id}">Draft ${bp.name}</button> <button class="btn" data-q="${bp.id}">${state.queue.includes(bp.id)?'Remove Queue':'Add Queue'}</button></div></div>`:'<div class="muted">Draft complete.</div>';document.getElementById('topAvailable').innerHTML=topAvailable().map(p=>playerRow(p)).join('');document.getElementById('recentPicks').innerHTML=state.log.slice(-6).reverse().map(x=>`<div class="row"><div><div class="name">#${x.pick} ${x.name}</div><div class="meta">${state.teams[x.team].name} Â· ${x.pos}</div></div></div>`).join('')||'<div class="muted">No picks yet.</div>'}
+function renderDraft(){
+  let ti=pickTeam(state.pick);
+  document.getElementById('draftSituation').innerHTML=`<div class="grid3"><div class="stat"><b>#${state.pick}</b><span>PICK</span></div><div class="stat"><b>R${roundOf(state.pick)}</b><span>ROUND</span></div><div class="stat"><b>${state.teams[ti]?.name||'—'}</b><span>ON CLOCK</span></div></div><div style="margin-top:8px"><button class="btn" onclick="removeLast()">Undo Last Pick</button></div>`;
+  document.getElementById('bestPick').innerHTML=recommendationHTML();
+  document.getElementById('topAvailable').innerHTML=topAvailable().map(p=>playerRow(p)).join('');
+  document.getElementById('recentPicks').innerHTML=state.log.slice(-6).reverse().map(x=>`<div class="row"><div><div class="name">#${x.pick} ${x.name}</div><div class="meta">${state.teams[x.team].name} · ${x.pos}</div></div></div>`).join('')||'<div class="muted">No picks yet.</div>';
+}
 let posFilter='ALL';
 function renderPlayers(){let q=document.getElementById('playerSearch').value.toLowerCase();let a=available().filter(p=>(posFilter==='ALL'||p.pos===posFilter)&&p.name.toLowerCase().includes(q)).slice(0,70);document.getElementById('playerList').innerHTML=a.map(p=>playerRow(p)).join('')||'<div class="muted">No matching players.</div>'}
-function renderTeams(){document.getElementById('teamsList').innerHTML=state.teams.map((t,i)=>{let c=counts(t);return `<div class="teamcard"><div class="teamhead"><div class="name">${i+1}. ${t.name}</div><span class="tag">${t.players.length}/16</span></div><div class="meta">QB ${c.QB} Â· RB ${c.RB} Â· WR ${c.WR} Â· TE ${c.TE} Â· K ${c.K} Â· DEF ${c.DEF}</div><div class="needs">Needs: ${needsText(t)}</div></div>`}).join('')}
-function renderGame(){let ti=pickTeam(state.pick),bp=bestAvailable(),mine=ti===state.mySlot-1;document.getElementById('gameSituation').innerHTML=`<div class="grid3"><div class="stat"><b>#${state.pick}</b><span>PICK</span></div><div class="stat"><b>R${roundOf(state.pick)}</b><span>ROUND</span></div><div class="stat"><b>${mine?'YOU':state.teams[ti].name}</b><span>ON CLOCK</span></div></div>`;document.getElementById('gameRecommendation').innerHTML=bp?`<div class="quickpick"><div class="heroName">${bp.name}</div><div class="muted">${bp.pos} Â· ${bp.team} Â· ${Math.round(bp.consensus)} pts Â· ${statusFlag(bp)}</div><button class="btn primary" data-pick="${bp.id}" style="margin-top:10px">Draft</button></div>`:'';renderGameSearch();let qs=state.queue.map(id=>PLAYERS.find(p=>p.id===id)).filter(p=>p&&!draftedIds().has(p.id));document.getElementById('gameQueue').innerHTML=qs.length?qs.map(p=>playerRow(p)).join(''):'<div class="muted">Queue is empty.</div>';let pressure={QB:0,RB:0,WR:0,TE:0};for(let t of state.teams){let c=counts(t);if(c.QB<1)pressure.QB++;if(c.RB<2)pressure.RB++;if(c.WR<2)pressure.WR++;if(c.TE<1)pressure.TE++}document.getElementById('positionPressure').innerHTML=Object.entries(pressure).map(([p,n])=>`<div class="row"><div class="name">${p}</div><div class="score">${n} teams</div></div>`).join('')}
+
+function renderBoard(){
+  let el=document.getElementById('draftBoard');if(!el)return;
+  let byPick=new Map(state.log.map(x=>[x.pick,x]));
+  let html='<div class="boardWrap"><table class="boardTable"><thead><tr><th>RND</th>';
+  for(let i=0;i<12;i++) html+=`<th>${i+1}. ${state.teams[i].name}</th>`;
+  html+='</tr></thead><tbody>';
+  for(let r=1;r<=16;r++){
+    html+=`<tr><td>R${r}</td>`;
+    for(let team=0;team<12;team++){
+      let pick=(r-1)*12 + (r%2?team+1:12-team);
+      let x=byPick.get(pick);
+      let mine=(team===state.mySlot-1)?' boardMine':'';
+      html+=`<td class="boardCell${mine}"><div class="boardPick">#${pick}</div>${x?`<div class="boardPlayer">${x.name}</div><div class="boardPos">${x.pos}</div>`:'<div class="emptyPick">—</div>'}</td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</tbody></table></div>';
+  el.innerHTML=html;
+}
+function renderTeamRoundPicks(){
+  let sel=document.getElementById('teamPickSelector'),list=document.getElementById('teamRoundPicks'),sum=document.getElementById('selectedTeamSummary');
+  if(!sel||!list||!sum)return;
+  let prior=sel.value;
+  sel.innerHTML=state.teams.map((t,i)=>`<option value="${i}">${i+1}. ${t.name}</option>`).join('');
+  if(prior!=='' && +prior<12)sel.value=prior; else sel.value=String(state.mySlot-1);
+  let ti=+sel.value,t=state.teams[ti],c=counts(t);
+  sum.innerHTML=`<div class="grid3"><div class="stat"><b>${t.players.length}/16</b><span>PLAYERS</span></div><div class="stat"><b>${c.RB+c.WR+c.TE}</b><span>SKILL PICKS</span></div><div class="stat"><b>${needsText(t)}</b><span>NEEDS</span></div></div>`;
+  let byRound=new Map();
+  (t.players||[]).forEach(p=>{let rr=roundOf(p.pick);byRound.set(rr,p)});
+  list.innerHTML=Array.from({length:16},(_,i)=>{
+    let r=i+1,p=byRound.get(r);
+    let pick=(r-1)*12 + (r%2?ti+1:12-ti);
+    return `<div class="roundRow"><div class="roundNum">R${r}</div><div class="pickNum">#${pick}</div><div>${p?`<div class="name">${p.name}</div><div class="meta">${p.team||''}</div>`:'<div class="emptyPick">Not drafted yet</div>'}</div><div class="pos">${p?p.pos:'—'}</div></div>`;
+  }).join('');
+}
+
+function renderTeams(){
+  document.getElementById('teamsList').innerHTML=state.teams.map((t,i)=>{let c=counts(t);return `<div class="teamcard"><div class="teamhead"><div class="name">${i+1}. ${t.name}</div><span class="tag">${t.players.length}/16</span></div><div class="meta">QB ${c.QB} · RB ${c.RB} · WR ${c.WR} · TE ${c.TE} · K ${c.K} · DEF ${c.DEF}</div><div class="needs">Needs: ${needsText(t)}</div></div>`}).join('');
+  renderTeamRoundPicks();
+}
+function renderGame(){
+  let ti=pickTeam(state.pick),mine=ti===state.mySlot-1;
+  document.getElementById('gameSituation').innerHTML=`<div class="grid3"><div class="stat"><b>#${state.pick}</b><span>PICK</span></div><div class="stat"><b>R${roundOf(state.pick)}</b><span>ROUND</span></div><div class="stat"><b>${mine?'YOU':state.teams[ti].name}</b><span>ON CLOCK</span></div></div>`;
+  document.getElementById('gameRecommendation').innerHTML=recommendationHTML();
+  renderGameSearch();
+  let qs=state.queue.map(id=>PLAYERS.find(p=>p.id===id)).filter(p=>p&&!draftedIds().has(p.id));
+  document.getElementById('gameQueue').innerHTML=qs.length?qs.map(p=>playerRow(p)).join(''):'<div class="muted">Queue is empty.</div>';
+  let pressure={QB:0,RB:0,WR:0,TE:0};
+  for(let t of state.teams){let c=counts(t);if(c.QB<1)pressure.QB++;if(c.RB<2)pressure.RB++;if(c.WR<2)pressure.WR++;if(c.TE<1)pressure.TE++}
+  document.getElementById('positionPressure').innerHTML=Object.entries(pressure).map(([p,n])=>`<div class="row"><div class="name">${p}</div><div class="score">${n} teams</div></div>`).join('');
+}
 function renderGameSearch(){let q=document.getElementById('gameSearch').value.toLowerCase();let el=document.getElementById('gameSearchResults');if(!q){el.innerHTML='<div class="muted">Type a player name.</div>';return}el.innerHTML=available().filter(p=>p.name.toLowerCase().includes(q)).slice(0,8).map(p=>playerRow(p)).join('')}
-function renderSync(){document.getElementById('syncStatus').innerHTML=`<div class="grid3"><div class="stat"><b>${navigator.onLine?'ONLINE':'OFFLINE'}</b><span>NETWORK</span></div><div class="stat"><b>${state.lastSync?Math.round((Date.now()-state.lastSync)/3600000)+'h':'â'}</b><span>LAST SYNC</span></div><div class="stat"><b>${Object.keys(state.flags).length}</b><span>FLAGS</span></div></div>`}
-async function syncSleeper(){if(!navigator.onLine)return toast('Offline');let b=document.getElementById('syncSleeper');b.disabled=true;b.textContent='Refreshingâ¦';try{let r=await fetch('https://api.sleeper.app/v1/players/nfl',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);let data=await r.json(),byName=new Map(PLAYERS.map(p=>[p.name.toLowerCase().replace(/[^a-z0-9]/g,''),p])),changed=0;for(let sp of Object.values(data)){if(!sp?.full_name)continue;let p=byName.get(sp.full_name.toLowerCase().replace(/[^a-z0-9]/g,''));if(!p)continue;let s=String(sp.injury_status||sp.status||'').toUpperCase(),flag=s.includes('IR')?'IR':s.includes('OUT')?'OUT':s.includes('SUSP')?'SUSP':(s.includes('QUESTION')||s==='Q')?'Q':'OK';let old=state.flags[p.id]||'OK';if(flag==='OK')delete state.flags[p.id];else state.flags[p.id]=flag;if(old!==flag)changed++}state.lastSync=Date.now();save();toast(`Status refreshed Â· ${changed} changes`)}catch(e){toast('Sync failed')}finally{b.disabled=false;b.textContent='Refresh NFL Status';renderSync()}}
+function renderSync(){document.getElementById('syncStatus').innerHTML=`<div class="grid3"><div class="stat"><b>${navigator.onLine?'ONLINE':'OFFLINE'}</b><span>NETWORK</span></div><div class="stat"><b>${state.lastSync?Math.round((Date.now()-state.lastSync)/3600000)+'h':'—'}</b><span>LAST SYNC</span></div><div class="stat"><b>${Object.keys(state.flags).length}</b><span>FLAGS</span></div></div>`}
+async function syncSleeper(){if(!navigator.onLine)return toast('Offline');let b=document.getElementById('syncSleeper');b.disabled=true;b.textContent='Refreshing…';try{let r=await fetch('https://api.sleeper.app/v1/players/nfl',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);let data=await r.json(),byName=new Map(PLAYERS.map(p=>[p.name.toLowerCase().replace(/[^a-z0-9]/g,''),p])),changed=0;for(let sp of Object.values(data)){if(!sp?.full_name)continue;let p=byName.get(sp.full_name.toLowerCase().replace(/[^a-z0-9]/g,''));if(!p)continue;let s=String(sp.injury_status||sp.status||'').toUpperCase(),flag=s.includes('IR')?'IR':s.includes('OUT')?'OUT':s.includes('SUSP')?'SUSP':(s.includes('QUESTION')||s==='Q')?'Q':'OK';let old=state.flags[p.id]||'OK';if(flag==='OK')delete state.flags[p.id];else state.flags[p.id]=flag;if(old!==flag)changed++}state.lastSync=Date.now();save();toast(`Status refreshed · ${changed} changes`)}catch(e){toast('Sync failed')}finally{b.disabled=false;b.textContent='Refresh NFL Status';renderSync()}}
 function renderSettings(){let s=document.getElementById('mySlot');s.innerHTML=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('');s.value=state.mySlot;document.getElementById('teamEditors').innerHTML=state.teams.map((t,i)=>`<div class="row"><div class="meta">Team ${i+1}</div><input data-team="${i}" value="${t.name.replace(/"/g,'&quot;')}" style="max-width:70%"></div>`).join('')}
-function renderCurrent(){let id=document.querySelector('.view.active')?.id||'draft';if(id==='draft')renderDraft();else if(id==='players')renderPlayers();else if(id==='teams')renderTeams();else if(id==='gameday')renderGame();else if(id==='sync')renderSync();else if(id==='settings')renderSettings()}
+function renderCurrent(){let id=document.querySelector('.view.active')?.id||'draft';if(id==='draft')renderDraft();else if(id==='players')renderPlayers();else if(id==='board')renderBoard();else if(id==='teams')renderTeams();else if(id==='gameday')renderGame();else if(id==='sync')renderSync();else if(id==='settings')renderSettings()}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===b.dataset.view));renderCurrent()});
 document.body.addEventListener('click',e=>{let p=e.target.closest('[data-pick]');if(p)record(+p.dataset.pick);let q=e.target.closest('[data-q]');if(q)toggleQueue(+q.dataset.q)});
 document.getElementById('playerSearch').oninput=renderPlayers;document.getElementById('gameSearch').oninput=renderGameSearch;
 document.getElementById('syncSleeper').onclick=syncSleeper;
+document.getElementById('teamPickSelector').onchange=renderTeamRoundPicks;
 document.getElementById('mySlot').onchange=e=>{state.mySlot=+e.target.value;save()};
 document.getElementById('teamEditors').addEventListener('change',e=>{if(e.target.dataset.team!=null){state.teams[+e.target.dataset.team].name=e.target.value||`Team ${+e.target.dataset.team+1}`;save()}});
 document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset the entire draft?')){state=fresh();save();renderCurrent()}};
