@@ -1,4 +1,4 @@
-# Triggered after initial workflow installation so GitHub Actions can see it on main.
+# One-time installer: a research-feed push triggers this after the workflow exists on main.
 name: Install Research Refresh v3
 
 on:
@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/install-research-refresh-v3.yml'
+      - 'research-refresh-v3.json'
 
 permissions:
   contents: write
