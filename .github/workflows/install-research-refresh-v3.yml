@@ -1,0 +1,127 @@
+name: Install Research Refresh v3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/install-research-refresh-v3.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Patch NotaKeeperLeague
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          s = path.read_text()
+
+          old_urls = """const SYNC_URLS={
+            sleeper:'https://api.sleeper.app/v1/players/nfl',
+            rankings:'https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_fpecr.csv.gz'
+          };"""
+          new_urls = """const SYNC_URLS={
+            sleeper:'https://api.sleeper.app/v1/players/nfl',
+            rankings:'https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_fpecr.csv.gz',
+            research:'research-refresh-v3.json'
+          };"""
+          if old_urls not in s:
+              raise SystemExit('SYNC_URLS marker not found')
+          s = s.replace(old_urls, new_urls, 1)
+
+          marker = "async function syncSleeper(force=false,bypassLock=false){"
+          if marker not in s:
+              raise SystemExit('syncSleeper marker not found')
+
+          research_runtime = r'''function applyResearchOverlay(){
+            const overlay=state.researchOverlay;
+            if(!overlay||!Array.isArray(overlay.players))return 0;
+            let matched=0;
+            overlay.players.forEach(o=>{
+              const p=PLAYERS.find(x=>normName(x.name)===normName(o.name));
+              if(!p)return;
+              matched++;
+              p.researchAdjustment=Number(p.researchAdjustment||0)+Number(o.researchDelta||0);
+              p.confidenceScore=Math.max(1,Math.min(99,Number(p.confidenceScore||70)+Number(o.confidenceDelta||0)));
+              p.priceCeiling=Math.max(1,Math.round(Number(p.priceCeiling||p.draftRank||p.marketRank||999)+Number(o.priceCeilingDelta||0)));
+              p.researchRefreshNote=String(o.note||'');
+              p.researchRefreshVersion=String(overlay.version||'3.0');
+            });
+            return matched;
+          }
+
+          async function syncResearchRefresh(force=false,bypassLock=false){
+            if(isDraftDataLocked()&&!bypassLock)return {locked:true};
+            const last=Number(state.liveSync?.lastResearch||0);
+            if(!force&&last&&hoursSince(last)<6&&state.researchOverlay){return {skipped:true,matched:applyResearchOverlay()};}
+            try{
+              const res=await fetch(`${SYNC_URLS.research}?v=${Date.now()}`,{cache:'no-store'});
+              if(!res.ok)throw new Error(`HTTP ${res.status}`);
+              const obj=await res.json();
+              if(!obj||!Array.isArray(obj.players))throw new Error('Invalid research refresh feed');
+              state.researchOverlay=obj;
+              state.liveSync.lastResearch=nowMs();
+              applyResearchModelV2();
+              PLAYERS.slice(0,300).forEach(p=>{
+                p.survivalToNextPick=numericSurvivalToNextPick(p);
+                p.strategyTag=strategyTagFor(p);
+              });
+              addSyncChange('Research Model refresh',`${obj.players.length} curated player notes · ${obj.version||'v3'}`);
+              snapshotLivePlayerCache();save();renderAll();
+              return {matched:obj.players.length,version:obj.version||'3.0'};
+            }catch(e){
+              console.warn('Research refresh unavailable; using saved model.',e);
+              if(state.researchOverlay){applyResearchModelV2();renderAll();}
+              return {error:e.message};
+            }
+          }
+
+          '''
+          s = s.replace(marker, research_runtime + marker, 1)
+
+          old_boot = """applyLivePlayerCache();
+          applyResearchModelV2();
+          PLAYERS.slice(0,300).forEach(p=>{
+            p.survivalToNextPick=numericSurvivalToNextPick(p);
+            p.strategyTag=strategyTagFor(p);
+          });"""
+          new_boot = """const _applyResearchModelV2Base=applyResearchModelV2;
+          applyResearchModelV2=function(){
+            _applyResearchModelV2Base();
+            applyResearchOverlay();
+          };
+          applyLivePlayerCache();
+          applyResearchModelV2();
+          PLAYERS.slice(0,300).forEach(p=>{
+            p.survivalToNextPick=numericSurvivalToNextPick(p);
+            p.strategyTag=strategyTagFor(p);
+          });
+          setTimeout(()=>syncResearchRefresh(false),500);"""
+          if old_boot not in s:
+              raise SystemExit('Research Model boot marker not found')
+          s = s.replace(old_boot, new_boot, 1)
+
+          path.write_text(s)
+          PY
+      - name: Validate Research Model v2 + v3 refresh hook
+        run: |
+          node tests/research-model-v2.test.js
+          grep -q "research-refresh-v3.json" index.html
+          grep -q "syncResearchRefresh" index.html
+      - name: Commit installed refresh layer
+        run: |
+          rm .github/workflows/install-research-refresh-v3.yml
+          git config user.name "NotaKeeper Research Updater"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html .github/workflows/install-research-refresh-v3.yml
+          git commit -m "Install automatic Research Refresh v3 layer"
+          git push origin main
