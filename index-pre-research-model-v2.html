@@ -5152,163 +5152,7 @@ function wireFinalControls(){
   }
 }
 
-/* ================================================================
-   RESEARCH MODEL v2
-   Keeps the league's custom-scoring projections as production truth,
-   then separates projection order from single-QB draft value.
-   ================================================================ */
-const RESEARCH_MODEL_VERSION='2.0';
-
-function applyResearchModelV2(){
-  const eligible=PLAYERS.filter(p=>!['K','DEF'].includes(p.pos))
-    .slice().sort((a,b)=>(a.marketRank||a.rank||999)-(b.marketRank||b.rank||999));
-  const modeled=new Set(eligible.slice(0,300).map(p=>p.id));
-  const byPosition={};
-  PLAYERS.forEach(p=>(byPosition[p.pos]||(byPosition[p.pos]=[])).push(p));
-  Object.values(byPosition).forEach(a=>a.sort((x,y)=>Number(y.consensus||0)-Number(x.consensus||0)));
-
-  // A 12-team, one-QB league replaces QB much more cheaply than RB/WR.
-  const replacementSlot={QB:12,RB:36,WR:36,TE:12,K:12,DEF:12};
-  const replacement={};
-  Object.entries(byPosition).forEach(([pos,a])=>{
-    const i=Math.min(a.length-1,replacementSlot[pos]??12);
-    replacement[pos]=Number(a[i]?.consensus||0);
-  });
-  const projectionOrder=PLAYERS.slice().sort((a,b)=>Number(b.consensus||0)-Number(a.consensus||0));
-  projectionOrder.forEach((p,i)=>p.projectionRank=i+1);
-
-  const eliteOrder=['Jahmyr Gibbs','Bijan Robinson',"Ja'Marr Chase",'Puka Nacua','Jaxon Smith-Njigba','Amon-Ra St. Brown'];
-  const eliteBoost=new Map(eliteOrder.map((name,i)=>[name,36-i*1.5]));
-  PLAYERS.forEach(p=>{
-    p.projectedFantasyPoints=Number(p.consensus||0);
-    p.researchModel=modeled.has(p.id)?RESEARCH_MODEL_VERSION:'DEPTH';
-    p.researchAdjustment=modeled.has(p.id)
-      ? Math.max(-4,Math.min(4,Math.round(((Number(p.fp||p.consensus)-Number(p.fg||p.consensus))*.12+(Number(p.ds||p.consensus)-Number(p.consensus))*.08)*10)/10))
-      : 0;
-    const spread=Math.abs(Number(p.fp||0)-Number(p.fg||p.fp||0))+Math.abs(Number(p.ds||0)-Number(p.fp||0));
-    p.confidenceScore=modeled.has(p.id)?Math.max(48,Math.min(94,Math.round((p.status==='CUSTOM'?89:72)-spread*.35))):45;
-    p.vor=Math.round((p.projectedFantasyPoints-(replacement[p.pos]||0))*10)/10;
-    // VOR leads. Scarce RB/WR workloads and truly elite TE advantage receive
-    // modest structural credit; raw QB totals do not become overall rank.
-    let structural={RB:17,WR:14,TE:8,QB:-7,K:-35,DEF:-35}[p.pos]||0;
-    if(p.pos==='QB')structural-=Math.max(0,(p.posRank||20)-1)*1.1;
-    if(['Trey McBride','Brock Bowers'].includes(p.name))structural+=24;
-    if(eliteBoost.has(p.name))structural+=eliteBoost.get(p.name);
-    p.championshipValue=p.vor+structural+p.researchAdjustment+(p.confidenceScore-70)*.08;
-    p.priceCeiling=Math.max(1,Math.round((p.marketRank||p.rank||300)-Math.max(-12,Math.min(18,p.vor*.09))));
-  });
-
-  const draftOrder=PLAYERS.slice().sort((a,b)=>b.championshipValue-a.championshipValue || (a.marketRank||999)-(b.marketRank||999));
-  draftOrder.forEach((p,i)=>{p.draftRank=i+1;p.rank=i+1;});
-  Object.values(byPosition).forEach(a=>{
-    a.sort((x,y)=>x.draftRank-y.draftRank);
-    let tier=1,previous=null,inTier=0;
-    a.forEach((p,i)=>{
-      if(previous!==null && (previous-p.championshipValue>9 || inTier>=6)){tier++;inTier=0;}
-      p.posRank=i+1;p.tier=tier;previous=p.championshipValue;inTier++;
-    });
-  });
-  PLAYERS.sort((a,b)=>a.draftRank-b.draftRank);
-  PLAYERS.forEach(p=>p.valueGap=(p.marketRank||p.draftRank)-p.draftRank);
-}
-
-function numericSurvivalToNextPick(p){
-  if(!state.mySlot)return 50;
-  let until=picksUntilNextMine();
-  if(until===0){const nextRound=roundOf(state.pick)+1,nextPick=nextRound<=16?myPickInRound(nextRound):null;until=nextPick?nextPick-state.pick:0;}
-  const market=p.marketRank||p.draftRank, distance=market-state.pick;
-  const demand={RB:1.18,WR:1.08,TE:.82,QB:.62,K:.2,DEF:.2}[p.pos]||1;
-  const run=recentPositionRun(),runPenalty=run.pos===p.pos?(run.level==='HOT'?18:8):0;
-  const tierPenalty=Math.max(0,4-sameTierRemaining(p))*7;
-  return Math.max(2,Math.min(98,Math.round(52+(distance-(until||0)*demand)*3-runPenalty-tierPenalty)));
-}
-
-function rosterConstructionScore(p){
-  if(!state.mySlot)return 0;
-  const roster=state.teams[state.mySlot-1]?.players||[],counts={};
-  roster.forEach(x=>counts[x.pos]=(counts[x.pos]||0)+1);
-  const round=roundOf(state.pick);
-  if(p.pos==='QB')return counts.QB?-22:(round<=3?-15:round<=7?2:7);
-  if(p.pos==='TE')return counts.TE?-13:((['Trey McBride','Brock Bowers'].includes(p.name))?12:(round<=4?-7:4));
-  if(p.pos==='RB')return (counts.RB||0)<2?14:(round>=9 && p.draftRank>100?8:2);
-  if(p.pos==='WR')return (counts.WR||0)<2?12:(round>=8 && p.draftRank>90?8:3);
-  return round>=13?1:-25;
-}
-
-function recommendationScoreV2(p){
-  const survival=numericSurvivalToNextPick(p),tierLeft=sameTierRemaining(p);
-  const run=recentPositionRun();
-  const marketValue=Math.max(-10,Math.min(10,((p.marketRank||p.draftRank)-state.pick)*-.3));
-  let score=p.championshipValue*1.0;                         // 1. VOR / championship value
-  score+=Math.max(0,7-tierLeft)*3.2;                        // 2. tier scarcity
-  score+=rosterConstructionScore(p);                       // 3. roster construction
-  score+=p.researchAdjustment*.8;                          // 4. research projection
-  score+=(100-survival)*.13;                               // 5. won't survive
-  score+=(run.pos===p.pos?(run.level==='HOT'?8:3):0);      // 6. room demand / run
-  score+=marketValue;                                      // 7. ADP as price only
-  score+=(p.confidenceScore-70)*.08;                        // 8. confidence / risk
-  // Don't get cute: a clearly superior option cannot lose merely because ADP
-  // hints that the room could let him fall.
-  if(p.draftRank<=Math.max(6,state.pick-5))score+=16;
-  if(p.pos==='QB' && roundOf(state.pick)<=3)score-=18;
-  if(p.draftRank>120 && roundOf(state.pick)>=9){
-    const youthUpside=(p.rookie||p.status==='CUSTOM')?8:0;
-    score+=youthUpside;
-  }
-  return score;
-}
-
-function strategyTagFor(p){
-  const survival=numericSurvivalToNextPick(p),gap=(p.marketRank||p.draftRank)-p.draftRank;
-  if(p.priceCeiling<state.pick-5)return 'FADE AT PRICE';
-  if(p.draftRank<=state.pick+2 && survival<45)return 'PRIORITY';
-  if(gap>=12)return 'VALUE';
-  if(survival>=72 && p.draftRank>state.pick-2)return 'WAIT';
-  if((p.rookie||p.status!=='CUSTOM') && p.draftRank>90)return 'UPSIDE';
-  if(p.draftRank<=state.pick+10)return 'TARGET';
-  return 'FAIR';
-}
-
 applyLivePlayerCache();
-applyResearchModelV2();
-PLAYERS.slice(0,300).forEach(p=>{
-  p.survivalToNextPick=numericSurvivalToNextPick(p);
-  p.strategyTag=strategyTagFor(p);
-});
-
-// Replace the legacy raw-points selector while retaining every draft action.
-bestPlayer=function(){
-  return available().slice().sort((a,b)=>recommendationScoreV2(b)-recommendationScoreV2(a) || a.draftRank-b.draftRank)[0];
-};
-const renderStatusLegacy=renderStatus;
-renderStatus=function(){
-  renderStatusLegacy();
-  const p=bestPlayer();
-  if(!p)return;
-  p.survivalToNextPick=numericSurvivalToNextPick(p);p.strategyTag=strategyTagFor(p);
-  bestWhy.textContent=`Draft #${p.draftRank} · projection #${p.projectionRank} · ${p.projectedFantasyPoints} custom-scoring pts · VOR ${p.vor>=0?'+':''}${p.vor} · ${p.survivalToNextPick}% survival.`;
-  bestBadges.innerHTML=`<span class="badge">${p.pos}</span><span class="badge">${p.strategyTag}</span><span class="badge">Tier ${p.tier}</span>`;
-};
-survivalEstimate=function(p){
-  const pct=numericSurvivalToNextPick(p);p.survivalToNextPick=pct;p.strategyTag=strategyTagFor(p);
-  return {label:pct<28?'UNLIKELY':pct<52?'RISKY':pct>=74?'LIKELY':'50 / 50',text:`${pct}% chance to reach your next pick`};
-};
-renderEditors=function(){
-  const ed=document.getElementById('teamEditors');if(!ed)return;
-  ed.replaceChildren();
-  state.teams.forEach((team,i)=>{
-    const label=document.createElement('div');label.className='field';label.textContent=`TEAM ${i+1}`;
-    const input=document.createElement('input');input.className='input teamName';input.dataset.i=i;input.value=team.name||`Team ${i+1}`;
-    ed.append(label,input);
-  });
-  const button=document.createElement('button');button.id='saveNames';button.className='btn primary';button.style.marginTop='12px';button.textContent='SAVE TEAM NAMES';
-  button.onclick=()=>{
-    ed.querySelectorAll('.teamName').forEach(input=>{const i=Number(input.dataset.i);state.teams[i].name=input.value.trim()||`Team ${i+1}`;});
-    save();renderEditors();
-  };
-  ed.append(button);
-};
-
 wireFinalControls();
 wireSafeBoot();
 window.addEventListener('online',()=>{});
@@ -5538,8 +5382,6 @@ window.addEventListener('offline',()=>{});
 })();
 </script>
 <style id="team-editor-final-fix-css-v122">
-#setup.view.active,
-#setup.view.active #teamEditors,
 #settings.view.active,
 #settings.view.active #teamEditors{
   display:block !important;
@@ -5549,7 +5391,6 @@ window.addEventListener('offline',()=>{});
   max-height:none !important;
   overflow:visible !important;
 }
-#setup.view.active #teamEditors .teamName,
 #settings.view.active #teamEditors .teamName{
   display:block !important;
   visibility:visible !important;
