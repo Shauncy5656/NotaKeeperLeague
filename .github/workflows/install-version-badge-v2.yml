@@ -1,0 +1,68 @@
+name: Install v2.0 Research Model badge
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/install-version-badge-v2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Patch version badge
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          s = path.read_text()
+
+          # Update browser title only; no layout change.
+          s = s.replace('<title>NotaKeeperLeague 1.1.5</title>', '<title>NotaKeeperLeague v2.0 · Research Model</title>', 1)
+
+          # Add a compact version style once.
+          if '.versionStamp{' not in s:
+              style = '''\n<style id="research-model-version-badge-v2">\n.versionStamp{display:inline-flex;align-items:center;margin-top:7px;padding:4px 8px;border:1px solid #2a3a55;border-radius:7px;background:#131c2a;color:#92a0b5;font-size:8px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;line-height:1}\n.versionStamp b{color:#d8ff3e;margin-right:4px;font-weight:1000}\n</style>\n'''
+              s = s.replace('</head>', style + '</head>', 1)
+
+          # Insert directly beneath the app brand/header without changing existing elements.
+          if 'v2.0 · Research Model' not in s.split('</body>',1)[0].replace('<title>NotaKeeperLeague v2.0 · Research Model</title>',''):
+              patterns = [
+                  r'(<div[^>]*class=["\'][^"\']*brand[^"\']*["\'][^>]*>.*?</div>)',
+                  r'(<div[^>]*class=["\'][^"\']*kicker[^"\']*["\'][^>]*>.*?</div>)'
+              ]
+              badge = r'\1<div class="versionStamp"><b>v2.0</b> · Research Model</div>'
+              inserted = False
+              for pat in patterns:
+                  ns, count = re.subn(pat, badge, s, count=1, flags=re.S|re.I)
+                  if count:
+                      s = ns
+                      inserted = True
+                      break
+              if not inserted:
+                  raise SystemExit('Header marker not found; index left unchanged')
+
+          path.write_text(s)
+          PY
+      - name: Validate badge
+        run: |
+          grep -q 'versionStamp' index.html
+          grep -q 'v2.0' index.html
+          grep -q 'Research Model' index.html
+      - name: Commit installed badge
+        run: |
+          rm .github/workflows/install-version-badge-v2.yml
+          git config user.name "NotaKeeper Research Updater"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html .github/workflows/install-version-badge-v2.yml
+          git commit -m "Add v2.0 Research Model version badge"
+          git push origin main
