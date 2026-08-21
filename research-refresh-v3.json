@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "3.0-2026-08-21",
-  "updatedAt": "2026-08-21T20:45:00Z",
+  "updatedAt": "2026-08-21T21:02:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
