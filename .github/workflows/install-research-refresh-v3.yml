@@ -1,3 +1,4 @@
+# Triggered after initial workflow installation so GitHub Actions can see it on main.
 name: Install Research Refresh v3
 
 on:
