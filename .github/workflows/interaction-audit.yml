@@ -1,0 +1,85 @@
+name: NotaKeeper Interaction Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/interaction-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser test runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install chromium --with-deps >/dev/null 2>&1
+      - name: Start local app
+        run: |
+          python3 -m http.server 4173 >/tmp/nkl-server.log 2>&1 &
+          sleep 2
+      - name: Audit mobile interactions
+        run: |
+          cat > /tmp/audit.js <<'JS'
+          const { chromium } = require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+            const consoleErrors=[]; const pageErrors=[];
+            page.on('console',m=>{ if(m.type()==='error') consoleErrors.push(m.text()); });
+            page.on('pageerror',e=>pageErrors.push(e.message));
+            await page.goto('http://127.0.0.1:4173/',{waitUntil:'load'});
+            await page.waitForTimeout(700);
+            console.log('TITLE',await page.title());
+            console.log('VERSION_BADGE',await page.locator('.versionStamp').allTextContents());
+            const tabs=['draft','players','teams','setup','board'];
+            for(const name of tabs){
+              const tab=page.locator(`.tab[data-view="${name}"]`).first();
+              const count=await tab.count();
+              if(!count){console.log('TAB_MISSING',name);continue;}
+              let ok=true,err='';
+              try{await tab.tap({timeout:3000});await page.waitForTimeout(150);}catch(e){ok=false;err=e.message.split('\n')[0];}
+              const active=await page.evaluate(n=>{
+                const aliases={draft:['draft'],players:['players'],teams:['teams'],setup:['setup','settings'],board:['board']};
+                return (aliases[n]||[]).some(id=>document.getElementById(id)?.classList.contains('active'));
+              },name);
+              console.log('TAB',name,'tap=',ok,'active=',active,err);
+            }
+            // Inspect every visible enabled button/select/input and whether something overlays its center.
+            const blocked=await page.evaluate(()=>{
+              const els=[...document.querySelectorAll('button,select,input:not([type=file]),[role=button]')].filter(el=>{
+                const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+                return r.width>2&&r.height>2&&cs.display!=='none'&&cs.visibility!=='hidden'&&!el.disabled;
+              });
+              return els.map(el=>{
+                const r=el.getBoundingClientRect(),x=Math.max(0,Math.min(innerWidth-1,r.left+r.width/2)),y=Math.max(0,Math.min(innerHeight-1,r.top+r.height/2));
+                const hit=document.elementFromPoint(x,y);
+                const owns=hit===el||el.contains(hit);
+                return {id:el.id||'',text:(el.textContent||el.value||el.getAttribute('aria-label')||'').trim().slice(0,70),tag:el.tagName,owns,hit:hit?`${hit.tagName}#${hit.id||''}.${hit.className||''}`:'none',rect:[Math.round(r.left),Math.round(r.top),Math.round(r.width),Math.round(r.height)]};
+              }).filter(x=>!x.owns);
+            });
+            console.log('BLOCKED_CONTROLS',JSON.stringify(blocked));
+            // Test common non-destructive controls on their owning views.
+            const tests=[
+              ['players','#playerSearch'],['setup','#runReadinessBtn'],['setup','#saveNames'],['board','#draftBoard'],['draft','#quickJumpSelect']
+            ];
+            for(const [view,sel] of tests){
+              const t=page.locator(`.tab[data-view="${view}"]`).first(); if(await t.count())await t.tap(); await page.waitForTimeout(100);
+              const el=page.locator(sel).first();
+              console.log('CONTROL',view,sel,'count=',await el.count(),'visible=',await el.isVisible().catch(()=>false),'enabled=',await el.isEnabled().catch(()=>false));
+            }
+            console.log('PAGE_ERRORS',JSON.stringify(pageErrors));
+            console.log('CONSOLE_ERRORS',JSON.stringify(consoleErrors));
+            await browser.close();
+            if(pageErrors.length)process.exitCode=2;
+          })();
+          JS
+          node /tmp/audit.js
