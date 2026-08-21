@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "version": "3.0-2026-08-21",
+  "updatedAt": "2026-08-21T20:45:00Z",
+  "refreshEveryHours": 6,
+  "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
+  "sources": [
+    {"label":"FantasyPros preseason risers/fallers","url":"https://www.fantasypros.com/2026/08/fantasy-football-risers-fallers-2026-nfl-preseason-week-1/"},
+    {"label":"ADPWire movers","url":"https://adpwire.com/movers"},
+    {"label":"Athlon RB movers","url":"https://athlonsports.com/fantasy/2026-fantasy-football-running-back-adp-risers-fallers"},
+    {"label":"Athlon WR movers","url":"https://athlonsports.com/fantasy/2026-fantasy-football-wide-receiver-adp-risers-fallers"},
+    {"label":"Athlon TE movers","url":"https://athlonsports.com/fantasy/2026-fantasy-football-tight-end-adp-risers-fallers"}
+  ],
+  "players": [
+    {"name":"Kenneth Walker III","researchDelta":1.5,"confidenceDelta":2,"priceCeilingDelta":-2,"note":"Workload and current draft-market support remain strong; allow a slightly earlier selection without changing his core projection."},
+    {"name":"Jayden Reed","researchDelta":1.2,"confidenceDelta":1,"priceCeilingDelta":-2,"note":"Recent ADP movement is positive; preserve upside treatment while market catches up."},
+    {"name":"Cam Skattebo","researchDelta":1.0,"confidenceDelta":1,"priceCeilingDelta":-2,"note":"Recovery and depth-chart movement improve the probability of a meaningful early-season role."},
+    {"name":"Dalton Kincaid","researchDelta":-0.6,"confidenceDelta":-2,"priceCeilingDelta":6,"note":"Mid-tier tight ends have been falling in consensus; keep him as value only when the room price discounts the uncertainty."},
+    {"name":"Mike Evans","researchDelta":-0.4,"confidenceDelta":-1,"priceCeilingDelta":3,"note":"Recent injury-related market softness warrants a small price discount, not a full fade."},
+    {"name":"Stefon Diggs","researchDelta":0.6,"confidenceDelta":1,"priceCeilingDelta":-2,"note":"Washington role improves immediate target opportunity; modest bump only until usage is confirmed."}
+  ]
+}
