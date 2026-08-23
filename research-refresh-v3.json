@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-22",
-  "updatedAt": "2026-08-22T17:52:43Z",
+  "version": "3.0-2026-08-23",
+  "updatedAt": "2026-08-23T18:04:42Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -52,6 +52,34 @@
     {
       "label": "FantasyPros: latest 2026 risers/fallers and ADP movement (Aug. 21)",
       "url": "https://www.fantasypros.com/2026/08/12-fantasy-football-risers-fallers-2026/"
+    },
+    {
+      "label": "FantasyPros: 10 ECR risers/fallers (Aug. 23)",
+      "url": "https://www.fantasypros.com/2026/08/10-ecr-risers-fallers-2026-fantasy-football/"
+    },
+    {
+      "label": "NFL: Preseason Week 2 Thursday role/efficiency takeaways (Aug. 20)",
+      "url": "https://www.nfl.com/news/2026-nfl-preseason-week-2-what-we-learned-thursday-games"
+    },
+    {
+      "label": "NFL: 2026 rookies worth late-round fantasy picks, including Stribling ADP rise (Aug. 18)",
+      "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-15-rookies-worth-a-late-round-draft-pick"
+    },
+    {
+      "label": "NFL: Jaguars expect Parker Washington back the following week (Aug. 18)",
+      "url": "https://fantasy-www.nfl.com/news/nfl-news-roundup-latest-league-updates-from-tuesday-aug-18"
+    },
+    {
+      "label": "Colts: Alec Pierce remained out of Preseason Week 2 while recovering from ankle surgery (Aug. 23)",
+      "url": "https://www.colts.com/news/5-colts-things-seth-mcgowan-spencer-shrader-cj-allen-and-other-notes-from-preseason-week-2"
+    },
+    {
+      "label": "FantasyPros: Makai Lemon returned only on a limited basis from hamstring injury (Aug. 20)",
+      "url": "https://www.fantasypros.com/nfl/news/603496/makai-lemon-hamstring-limited-practice-thursday.php"
+    },
+    {
+      "label": "Commanders: Diggs/McLaurin lead WR work while Antonio Williams flashes in reserve competition (Aug. 12)",
+      "url": "https://www.commanders.com/news/commanders-dolphins-training-camp-practice-notes"
     }
   ],
   "players": [
@@ -92,10 +120,10 @@
     },
     {
       "name": "Stefon Diggs",
-      "researchDelta": 0.6,
-      "confidenceDelta": 1,
-      "priceCeilingDelta": -2,
-      "note": "Washington role improves immediate target opportunity; modest bump only until usage is confirmed."
+      "researchDelta": 0.9,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -4,
+      "note": "Washington's projected high-snap role plus a sharp ECR rise support a modest upgrade; keep the bump restrained until regular-season target share is confirmed."
     },
     {
       "name": "Alvin Kamara",
@@ -138,6 +166,55 @@
       "confidenceDelta": -2,
       "priceCeilingDelta": 2,
       "note": "Groin strain is expected to cost roughly 2-3 weeks with an expected Week 1 return; apply only a minor durability/early-ramp discount."
+    },
+    {
+      "name": "Parker Washington",
+      "researchDelta": 1.0,
+      "confidenceDelta": 0,
+      "priceCeilingDelta": -3,
+      "note": "ECR has climbed sharply on a projected every-down/top-target role and a strong late-2025 finish, but an undisclosed day-to-day injury tempers the upgrade; keep only a modest value bump."
+    },
+    {
+      "name": "De'Zhaun Stribling",
+      "researchDelta": 1.2,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -4,
+      "note": "Eleven catches for 109 yards across two preseason games, including four catches on five targets over 14 snaps in Week 2, support an immediate role; a day-to-day shoulder injury keeps the bump conservative."
+    },
+    {
+      "name": "Makai Lemon",
+      "researchDelta": -1.4,
+      "confidenceDelta": -4,
+      "priceCeilingDelta": 10,
+      "note": "ADP has fallen dramatically as a rotational opening role becomes more likely, and repeated hamstring missed time has reduced rookie ramp-up certainty; discount without treating the talent as lost."
+    },
+    {
+      "name": "Alec Pierce",
+      "researchDelta": -1.2,
+      "confidenceDelta": -4,
+      "priceCeilingDelta": 8,
+      "note": "He remained out of Preseason Week 2 while recovering from offseason ankle surgery, his ECR has slipped, and Keenan Allen adds target competition; apply a meaningful early-season uncertainty discount."
+    },
+    {
+      "name": "Antonio Williams",
+      "researchDelta": -0.7,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 5,
+      "note": "Stefon Diggs' arrival materially narrows Williams' path to two-wide and full-time three-wide snaps, matching a recent ECR decline; treat him as a deeper rotational upside play."
+    },
+    {
+      "name": "Deebo Samuel Sr.",
+      "researchDelta": 0.7,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -3,
+      "note": "A return to San Francisco plus a likely hybrid receiving/rushing role has moved him well up ECR; modestly improve late-round value while acknowledging a crowded and injured receiver room."
+    },
+    {
+      "name": "Woody Marks",
+      "researchDelta": 1.2,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -4,
+      "note": "He produced 43 yards on five touches with the first-team offense in Preseason Week 2, including a 20-yard touchdown; the split with David Montgomery remains unresolved, so reward efficiency without assuming a takeover."
     }
   ]
 }
