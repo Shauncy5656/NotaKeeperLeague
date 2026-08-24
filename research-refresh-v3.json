@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-23",
-  "updatedAt": "2026-08-23T18:04:42Z",
+  "version": "3.0-2026-08-24",
+  "updatedAt": "2026-08-24T18:04:23Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -80,6 +80,34 @@
     {
       "label": "Commanders: Diggs/McLaurin lead WR work while Antonio Williams flashes in reserve competition (Aug. 12)",
       "url": "https://www.commanders.com/news/commanders-dolphins-training-camp-practice-notes"
+    },
+    {
+      "label": "FantasyPros: 20 NFL Preseason Week 2 role/usage takeaways (Aug. 24)",
+      "url": "https://www.fantasypros.com/2026/08/fantasy-football-20-nfl-preseason-week-2-takeaways-2026/"
+    },
+    {
+      "label": "NFL: Ashton Jeanty believed to have sprained ankle; not considered long-term (Aug. 23-24)",
+      "url": "https://www.nfl.com/news/raiders-rb-ashton-jeanty-apparent-right-leg-injury"
+    },
+    {
+      "label": "FantasyPros: Jadarian Price and George Kittle rising; Courtland Sutton trending down (Aug. 24)",
+      "url": "https://www.fantasypros.com/2026/08/4-players-trending-up-down-2026-fantasy-football-nfl-preseason/"
+    },
+    {
+      "label": "49ers: George Kittle activated from PUP and returned to individual practice (Aug. 23)",
+      "url": "https://www.49ers.com/news/day-16-of-2026-training-camp-george-kittle-s-remarkable-return"
+    },
+    {
+      "label": "NFL: Tyrone Tracy worked behind Devin Singletary and fumbled in Preseason Week 2 (Aug. 22)",
+      "url": "https://www.nfl.com/news/2026-nfl-preseason-week-2-what-we-learned-saturday-games"
+    },
+    {
+      "label": "NFL: Titans starter usage remained split between Tony Pollard and Tyjae Spears (Aug. 23)",
+      "url": "https://www.nfl.com/news/2026-nfl-preseason-week-2-what-we-learned-seahawks-titans"
+    },
+    {
+      "label": "NFL: MarShawn Lloyd Preseason Week 2 rushing/receiving line (Aug. 21)",
+      "url": "https://www.nfl.com/players/marshawn-lloyd/stats/logs/2026/"
     }
   ],
   "players": [
@@ -215,6 +243,69 @@
       "confidenceDelta": 2,
       "priceCeilingDelta": -4,
       "note": "He produced 43 yards on five touches with the first-team offense in Preseason Week 2, including a 20-yard touchdown; the split with David Montgomery remains unresolved, so reward efficiency without assuming a takeover."
+    },
+    {
+      "name": "Ashton Jeanty",
+      "researchDelta": -1.0,
+      "confidenceDelta": -4,
+      "priceCeilingDelta": 5,
+      "note": "Sunday's practice injury is believed to be a sprained ankle and is not considered long-term, but the return timeline is still unknown; apply a modest early-season availability discount rather than a major downgrade."
+    },
+    {
+      "name": "Mike Washington Jr.",
+      "researchDelta": 1.5,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -5,
+      "note": "The rookie has 119 rushing yards on 15 preseason carries and has established himself as Jeanty's clear backup; Jeanty's ankle sprain adds short-term contingent value, but keep the bump below standalone-starter territory."
+    },
+    {
+      "name": "Tyrone Tracy Jr.",
+      "researchDelta": -1.8,
+      "confidenceDelta": -4,
+      "priceCeilingDelta": 12,
+      "note": "He worked behind Devin Singletary with the starters, lost a red-zone fumble, and now sits in a crowded room with Cam Skattebo and Najee Harris; roster and role uncertainty justify a meaningful late-round discount."
+    },
+    {
+      "name": "Jadarian Price",
+      "researchDelta": 1.2,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -4,
+      "note": "Seattle has consistently involved the first-round rookie with the starters and as a receiver, while Zach Charbonnet remains on PUP; being protected from the remaining preseason games strengthens his early-volume case without guaranteeing a workhorse role."
+    },
+    {
+      "name": "George Kittle",
+      "researchDelta": 0.7,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -3,
+      "note": "Activation from PUP and a return to padded individual work materially improve his chance to avoid an extended early-season absence, but Achilles recovery and likely ramp-up still cap the upgrade."
+    },
+    {
+      "name": "MarShawn Lloyd",
+      "researchDelta": 0.8,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -3,
+      "note": "Healthy first-team usage and an 11-yard receiving touchdown in Preseason Week 2 strengthen his claim as Josh Jacobs' primary handcuff; keep the bump modest because passing-down work may still rotate."
+    },
+    {
+      "name": "Courtland Sutton",
+      "researchDelta": -0.5,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 3,
+      "note": "Sutton remains a starter and has played well, but Jaylen Waddle's arrival and Pat Bryant's rise make Denver's target tree more crowded; trim volume expectations slightly rather than downgrading his talent."
+    },
+    {
+      "name": "Tony Pollard",
+      "researchDelta": -0.5,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 3,
+      "note": "Pollard started Sunday, but Tyjae Spears has logged more starter snaps in each of Tennessee's first two preseason games; treat the backfield as a real committee and shave projected volume modestly."
+    },
+    {
+      "name": "Tyjae Spears",
+      "researchDelta": 0.5,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -2,
+      "note": "Spears has taken more snaps with Tennessee's starters than Pollard in both preseason games, increasing his committee-role floor; avoid a larger bump because Pollard still started and the offense has struggled."
     }
   ]
 }
