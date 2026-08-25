@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-24",
-  "updatedAt": "2026-08-24T18:04:23Z",
+  "version": "3.0-2026-08-25",
+  "updatedAt": "2026-08-25T17:58:59Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -108,6 +108,26 @@
     {
       "label": "NFL: MarShawn Lloyd Preseason Week 2 rushing/receiving line (Aug. 21)",
       "url": "https://www.nfl.com/players/marshawn-lloyd/stats/logs/2026/"
+    },
+    {
+      "label": "NFL: Makai Lemon returned to full practice after hamstring injury (Aug. 25)",
+      "url": "https://fantasy-www.nfl.com/news/eagles-rookie-wr-makai-lemon-back-at-practice-confident-hamstring-injury-won-t-linger-into-2026-season"
+    },
+    {
+      "label": "Raiders: Mike Washington Jr. took first-team reps with Ashton Jeanty sidelined (Aug. 24)",
+      "url": "https://www.raiders.com/news/training-camp-notebook-8-24-rookies-stack-late-camp-reps-as-their-climb-accelerates"
+    },
+    {
+      "label": "FantasyPros: Ashton Jeanty questionable for Week 1 with ankle injury (Aug. 25)",
+      "url": "https://www.fantasypros.com/2026/08/fantasy-football-injury-ashton-jeanty-questionable-for-week-1/"
+    },
+    {
+      "label": "FantasyPros: Emeka Egbuka remained out of practice with toe injury (Aug. 25)",
+      "url": "https://www.fantasypros.com/nfl/news/604111/emeka-egbuka-toe-not-practicing-tuesday.php"
+    },
+    {
+      "label": "CBS Sports: Breece Hall moving well in agility work during groin recovery (Aug. 24)",
+      "url": "https://www.cbssports.com/fantasy/football/news/jets-breece-hall-works-on-side-monday/"
     }
   ],
   "players": [
@@ -190,10 +210,10 @@
     },
     {
       "name": "Breece Hall",
-      "researchDelta": -0.5,
-      "confidenceDelta": -2,
-      "priceCeilingDelta": 2,
-      "note": "Groin strain is expected to cost roughly 2-3 weeks with an expected Week 1 return; apply only a minor durability/early-ramp discount."
+      "researchDelta": -0.2,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 1,
+      "note": "Hall is already doing agility work and was reported moving well while recovering from the groin strain, keeping him on schedule for Week 1; retain only a minimal early-ramp discount."
     },
     {
       "name": "Parker Washington",
@@ -211,10 +231,10 @@
     },
     {
       "name": "Makai Lemon",
-      "researchDelta": -1.4,
-      "confidenceDelta": -4,
-      "priceCeilingDelta": 10,
-      "note": "ADP has fallen dramatically as a rotational opening role becomes more likely, and repeated hamstring missed time has reduced rookie ramp-up certainty; discount without treating the talent as lost."
+      "researchDelta": -0.8,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 6,
+      "note": "Lemon returned to a full practice workload on Monday, including 7-on-7 and 11-on-11 work, materially reducing the hamstring availability concern; keep a smaller discount because his opening role and prior ADP slide still warrant caution."
     },
     {
       "name": "Alec Pierce",
@@ -246,17 +266,17 @@
     },
     {
       "name": "Ashton Jeanty",
-      "researchDelta": -1.0,
-      "confidenceDelta": -4,
-      "priceCeilingDelta": 5,
-      "note": "Sunday's practice injury is believed to be a sprained ankle and is not considered long-term, but the return timeline is still unknown; apply a modest early-season availability discount rather than a major downgrade."
+      "researchDelta": -1.3,
+      "confidenceDelta": -5,
+      "priceCeilingDelta": 7,
+      "note": "The ankle sprain is still viewed as non-long-term, but his Week 1 availability is now uncertain and he missed first-team work Monday; increase the early-season discount modestly without changing the long-term talent outlook."
     },
     {
       "name": "Mike Washington Jr.",
-      "researchDelta": 1.5,
-      "confidenceDelta": 2,
-      "priceCeilingDelta": -5,
-      "note": "The rookie has 119 rushing yards on 15 preseason carries and has established himself as Jeanty's clear backup; Jeanty's ankle sprain adds short-term contingent value, but keep the bump below standalone-starter territory."
+      "researchDelta": 1.8,
+      "confidenceDelta": 3,
+      "priceCeilingDelta": -6,
+      "note": "Washington handled first-team reps while Jeanty was sidelined and scored as a receiver in red-zone work, adding direct role confirmation to his strong preseason efficiency; keep the upgrade contingent on Jeanty's health."
     },
     {
       "name": "Tyrone Tracy Jr.",
@@ -306,6 +326,13 @@
       "confidenceDelta": 1,
       "priceCeilingDelta": -2,
       "note": "Spears has taken more snaps with Tennessee's starters than Pollard in both preseason games, increasing his committee-role floor; avoid a larger bump because Pollard still started and the offense has struggled."
+    },
+    {
+      "name": "Emeka Egbuka",
+      "researchDelta": -0.5,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 3,
+      "note": "Egbuka remained out of Tuesday practice with the toe sprain and the exact return date is still unclear; apply only a small temporary discount because prior reporting still points toward a Week 1 return."
     }
   ]
 }
