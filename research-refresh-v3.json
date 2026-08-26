@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-25",
-  "updatedAt": "2026-08-25T17:58:59Z",
+  "version": "3.0-2026-08-26",
+  "updatedAt": "2026-08-26T17:55:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -128,6 +128,30 @@
     {
       "label": "CBS Sports: Breece Hall moving well in agility work during groin recovery (Aug. 24)",
       "url": "https://www.cbssports.com/fantasy/football/news/jets-breece-hall-works-on-side-monday/"
+    },
+    {
+      "label": "FantasyPros: Real-Time ADP risers/fallers, including Stribling/Reed/Tracy (Aug. 26)",
+      "url": "https://www.fantasypros.com/2026/08/10-fantasy-football-adp-risers-fallers-2026/"
+    },
+    {
+      "label": "FantasyPros: Packers preparing for possible Josh Jacobs suspension (Aug. 26)",
+      "url": "https://www.fantasypros.com/nfl/news/josh-jacobs.php"
+    },
+    {
+      "label": "Giants: Malik Nabers shed red non-contact jersey and moved best of camp (Aug. 25)",
+      "url": "https://www.giants.com/news/preseason-finale-new-york-jets-john-harbaugh-53-man-roster-moves-malik-nabers-injury-update-offensive-line"
+    },
+    {
+      "label": "FantasyPros: Mike Evans missed practice with new groin injury after quad issues (Aug. 25)",
+      "url": "https://www.fantasypros.com/nfl/news/604129/mike-evans-not-practicing-due-to-groin-injury.php"
+    },
+    {
+      "label": "FantasyPros: Sam LaPorta returned to practice from hip injury (Aug. 25)",
+      "url": "https://www.fantasypros.com/nfl/news/sam-laporta.php"
+    },
+    {
+      "label": "FantasyPros: Ja'Marr Chase minor knee hyperextension; held out Wednesday (Aug. 25-26)",
+      "url": "https://www.fantasypros.com/nfl/news/604264/jamarr-chase-knee-not-practicing-wednesday.php"
     }
   ],
   "players": [
@@ -161,10 +185,10 @@
     },
     {
       "name": "Mike Evans",
-      "researchDelta": -0.4,
-      "confidenceDelta": -1,
-      "priceCeilingDelta": 3,
-      "note": "Recent injury-related market softness warrants a small price discount, not a full fade."
+      "researchDelta": -0.8,
+      "confidenceDelta": -3,
+      "priceCeilingDelta": 5,
+      "note": "A new groin absence follows earlier quad trouble, creating a small but real accumulation of soft-tissue risk. He remains day-to-day, so deepen the discount modestly rather than treating Week 1 as doubtful."
     },
     {
       "name": "Stefon Diggs",
@@ -203,10 +227,10 @@
     },
     {
       "name": "Malik Nabers",
-      "researchDelta": 0.8,
-      "confidenceDelta": 2,
-      "priceCeilingDelta": -2,
-      "note": "Return to team periods is a meaningful rehab milestone and ADP has rebounded, but Week 1 readiness is not guaranteed; restore only a small portion of the prior injury discount."
+      "researchDelta": 1.1,
+      "confidenceDelta": 3,
+      "priceCeilingDelta": -3,
+      "note": "Nabers shed the red non-contact jersey and was described by the Giants as moving the best he has looked this camp. Week 1 is now a reasonable expectation barring a setback, so restore a little more of the prior injury discount without assuming a full early-season workload."
     },
     {
       "name": "Breece Hall",
@@ -301,10 +325,17 @@
     },
     {
       "name": "MarShawn Lloyd",
-      "researchDelta": 0.8,
-      "confidenceDelta": 1,
-      "priceCeilingDelta": -3,
-      "note": "Healthy first-team usage and an 11-yard receiving touchdown in Preseason Week 2 strengthen his claim as Josh Jacobs' primary handcuff; keep the bump modest because passing-down work may still rotate."
+      "researchDelta": 1.1,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -4,
+      "note": "Healthy first-team usage already established Lloyd as the primary Jacobs handcuff, and Green Bay is now explicitly preparing for the possibility of a Josh Jacobs suspension. Keep the upgrade modest because no suspension has been announced and Green Bay could still add depth."
+    },
+    {
+      "name": "Josh Jacobs",
+      "researchDelta": -0.5,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 3,
+      "note": "Green Bay's GM said the club is preparing for the possibility of a suspension tied to Jacobs' unresolved personal-conduct matter. Because no suspension is announced and his groin has improved, apply only a modest availability-risk discount rather than changing his healthy-game workload projection."
     },
     {
       "name": "Courtland Sutton",
