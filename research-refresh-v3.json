@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-26",
-  "updatedAt": "2026-08-26T17:55:00Z",
+  "version": "3.0-2026-08-27",
+  "updatedAt": "2026-08-27T18:04:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -152,6 +152,30 @@
     {
       "label": "FantasyPros: Ja'Marr Chase minor knee hyperextension; held out Wednesday (Aug. 25-26)",
       "url": "https://www.fantasypros.com/nfl/news/604264/jamarr-chase-knee-not-practicing-wednesday.php"
+    },
+    {
+      "label": "NFL/FantasyPros: Alec Pierce activated from PUP to begin Week 1 ramp-up (Aug. 27)",
+      "url": "https://fantasy-www.nfl.com/news/colts-activate-wr-alec-pierce-off-pup-list"
+    },
+    {
+      "label": "Panthers: Chuba Hubbard ahead of schedule; Canales plans RB rotation with Jonathon Brooks (Aug. 24)",
+      "url": "https://www.panthers.com/news/chuba-hubbard-s-close-to-coming-back-and-continuing-to-bring-others-along-with-him"
+    },
+    {
+      "label": "NFL: Patriots trade Kayshon Boutte to Texans after Jayden Higgins ACL injury (Aug. 24-25)",
+      "url": "https://www.nfl.com/news/kayshon-boutte-trade-patriots-texans"
+    },
+    {
+      "label": "FantasyPros: Boutte projects into Houston two-wide sets opposite Nico Collins (Aug. 24-26)",
+      "url": "https://www.fantasypros.com/2026/08/fantasy-football-impact-patriots-trade-kayshon-boutte-to-texans/"
+    },
+    {
+      "label": "FantasyPros: Romeo Doubs projects as New England's clear WR2 behind A.J. Brown (Aug. 26)",
+      "url": "https://www.fantasypros.com/nfl/notes/419983/romeo-doubs-2026-outlook.php"
+    },
+    {
+      "label": "FantasyPros/NBC: Mike Evans groin issue considered minor; plans to play Week 1 (Aug. 26)",
+      "url": "https://www.fantasypros.com/nfl/news/604327/mike-evans-groin-planning-to-play-week-1.php"
     }
   ],
   "players": [
@@ -185,10 +209,10 @@
     },
     {
       "name": "Mike Evans",
-      "researchDelta": -0.8,
-      "confidenceDelta": -3,
-      "priceCeilingDelta": 5,
-      "note": "A new groin absence follows earlier quad trouble, creating a small but real accumulation of soft-tissue risk. He remains day-to-day, so deepen the discount modestly rather than treating Week 1 as doubtful."
+      "researchDelta": -0.4,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 2,
+      "note": "The accumulation of quad/groin issues still warrants a small soft-tissue risk discount, but the latest groin issue is considered minor and Evans plans to play Week 1; soften the prior penalty substantially."
     },
     {
       "name": "Stefon Diggs",
@@ -213,17 +237,17 @@
     },
     {
       "name": "Chuba Hubbard",
-      "researchDelta": -1.0,
-      "confidenceDelta": -3,
-      "priceCeilingDelta": 5,
-      "note": "A legitimate hamstring injury has kept him out while Jonathon Brooks gets first-team work; Week 1 remains plausible, so keep the downgrade modest."
+      "researchDelta": -0.4,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 2,
+      "note": "Hubbard remains out of team practice with the hamstring, but he is ahead of schedule, has exceeded 20 mph in return-to-play work and said he would play if there were a game now. Retain only a small early-ramp discount."
     },
     {
       "name": "Jonathon Brooks",
-      "researchDelta": 1.4,
+      "researchDelta": 1.0,
       "confidenceDelta": 2,
-      "priceCeilingDelta": -4,
-      "note": "He has worked with the first offense in consecutive preseason weeks and scored with the starters in Week 2; role probability is rising, but prior ACL history keeps the bump conservative."
+      "priceCeilingDelta": -3,
+      "note": "Brooks has earned meaningful first-team work and scored with the starters, but Dave Canales said the plan is to continue rotating backs when Hubbard returns. Preserve the role upgrade without pricing in a full takeover."
     },
     {
       "name": "Malik Nabers",
@@ -262,10 +286,10 @@
     },
     {
       "name": "Alec Pierce",
-      "researchDelta": -1.2,
-      "confidenceDelta": -4,
-      "priceCeilingDelta": 8,
-      "note": "He remained out of Preseason Week 2 while recovering from offseason ankle surgery, his ECR has slipped, and Keenan Allen adds target competition; apply a meaningful early-season uncertainty discount."
+      "researchDelta": -0.5,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 4,
+      "note": "Pierce was activated from PUP on Aug. 27 after rehabbing his surgically repaired ankle. Week 1 is now realistic, but a short ramp-up plus Keenan Allen's arrival still justify a moderate early-season uncertainty discount."
     },
     {
       "name": "Antonio Williams",
@@ -364,6 +388,20 @@
       "confidenceDelta": -2,
       "priceCeilingDelta": 3,
       "note": "Egbuka remained out of Tuesday practice with the toe sprain and the exact return date is still unclear; apply only a small temporary discount because prior reporting still points toward a Week 1 return."
+    },
+    {
+      "name": "Kayshon Boutte",
+      "researchDelta": 0.7,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -3,
+      "note": "Houston acquired Boutte after Jayden Higgins' season-ending ACL injury, and current role projections put Boutte in two-wide sets opposite Nico Collins as the vertical field stretcher. Upgrade the path to snaps modestly without assuming high target volume."
+    },
+    {
+      "name": "Romeo Doubs",
+      "researchDelta": 0.6,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -3,
+      "note": "The Boutte trade further clarifies Doubs as New England's primary outside WR2 behind A.J. Brown in a pass-heavier environment than Green Bay. Reward the cleaner route-volume path modestly while keeping him below true alpha treatment."
     }
   ]
 }
