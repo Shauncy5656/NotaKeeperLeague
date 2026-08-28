@@ -1,0 +1,107 @@
+name: Apply NotaKeeper Research Refresh 2026-08-28
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/research-refresh-2026-08-28.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Update research overlay only
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('research-refresh-v3.json')
+          data = json.loads(path.read_text())
+          assert data.get('schema') == 1
+          data['version'] = '3.0-2026-08-28'
+          data['updatedAt'] = '2026-08-28T18:03:00Z'
+
+          def add_source(label, url):
+              if not any(s.get('url') == url for s in data.get('sources', [])):
+                  data.setdefault('sources', []).append({'label': label, 'url': url})
+
+          add_source(
+              'NFL/AP: Josh Jacobs formally charged with two misdemeanors; Packers/NFL monitoring (Aug. 27)',
+              'https://fantasy-www.nfl.com/news/packers-rb-josh-jacobs-facing-misdemeanor-charges-of-battery-criminal-damage-to-property'
+          )
+          add_source(
+              'FantasyPros: Josh Jacobs/MarShawn Lloyd current suspension-risk outlook (Aug. 28)',
+              'https://www.fantasypros.com/2026/08/fantasy-football-outlook-josh-jacobs-marshawn-lloyd-2026/'
+          )
+          add_source(
+              'FantasyPros: TreVeyon Henderson expected good to go Week 1 but currently behind Rhamondre Stevenson (Aug. 27)',
+              'https://www.fantasypros.com/nfl/news/604478/treveyon-henderson-ankle-expected-to-be-good-to-go-week-1.php'
+          )
+          add_source(
+              'FantasyPros: Rhamondre Stevenson lead-back efficiency/role outlook (Aug. 24)',
+              'https://www.fantasypros.com/nfl/notes/419052/rhamondre-stevenson-2026-outlook.php'
+          )
+          add_source(
+              'FantasyPros: TreVeyon Henderson 2025 usage split and efficiency context (Aug. 26)',
+              'https://www.fantasypros.com/nfl/notes/419080/treveyon-henderson-2026-outlook.php'
+          )
+
+          updates = {
+              'Josh Jacobs': {
+                  'researchDelta': -0.9,
+                  'confidenceDelta': -4,
+                  'priceCeilingDelta': 6,
+                  'note': "Formal misdemeanor battery and criminal-damage charges were filed Aug. 27, moving the issue beyond the prior possibility-only stage. NFL discipline remains uncertain and may not come before Week 1, so increase the availability-risk discount modestly without reducing Jacobs' healthy-game workload projection."
+              },
+              'TreVeyon Henderson': {
+                  'researchDelta': -0.7,
+                  'confidenceDelta': -1,
+                  'priceCeilingDelta': 4,
+                  'note': "The ankle issue is expected to be fine for Week 1, but current reporting still has Henderson behind Rhamondre Stevenson. With Stevenson active in 2025, Henderson averaged 11.2 touches and 57.2 total yards and trailed Stevenson in several per-touch and pass-protection metrics; preserve explosive upside but price him as a committee/upside RB3 rather than assuming a takeover."
+              },
+              'Rhamondre Stevenson': {
+                  'researchDelta': 0.7,
+                  'confidenceDelta': 2,
+                  'priceCeilingDelta': -3,
+                  'note': "Current New England role reporting favors Stevenson as the lead back, supported by his 2025 advantage over Henderson in explosive run rate, missed-tackle rate, yards after contact, yards per route run and pass protection. Apply only a modest value bump because Henderson remains a talented committee threat."
+              }
+          }
+
+          players = data.setdefault('players', [])
+          by_name = {p.get('name'): p for p in players}
+          for name, vals in updates.items():
+              if name in by_name:
+                  by_name[name].update(vals)
+              else:
+                  players.append({'name': name, **vals})
+
+          path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
+          PY
+      - name: Validate only research JSON changed
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('research-refresh-v3.json').read_text())
+          assert d['schema']==1
+          assert d['version']=='3.0-2026-08-28'
+          names={p['name'] for p in d['players']}
+          assert {'Josh Jacobs','TreVeyon Henderson','Rhamondre Stevenson'} <= names
+          PY
+          git diff --exit-code -- index.html
+      - name: Commit refresh and remove installer
+        run: |
+          rm .github/workflows/research-refresh-2026-08-28.yml
+          git config user.name "NotaKeeper Research Updater"
+          git config user.email "actions@users.noreply.github.com"
+          git add research-refresh-v3.json .github/workflows/research-refresh-2026-08-28.yml
+          git commit -m "Refresh NotaKeeper research for Aug 28"
+          git push origin main
