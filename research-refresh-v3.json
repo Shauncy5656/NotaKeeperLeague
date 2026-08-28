@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-27",
-  "updatedAt": "2026-08-27T18:04:00Z",
+  "version": "3.0-2026-08-28",
+  "updatedAt": "2026-08-28T18:03:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -176,6 +176,26 @@
     {
       "label": "FantasyPros/NBC: Mike Evans groin issue considered minor; plans to play Week 1 (Aug. 26)",
       "url": "https://www.fantasypros.com/nfl/news/604327/mike-evans-groin-planning-to-play-week-1.php"
+    },
+    {
+      "label": "NFL/AP: Josh Jacobs formally charged with two misdemeanors; Packers/NFL monitoring (Aug. 27)",
+      "url": "https://fantasy-www.nfl.com/news/packers-rb-josh-jacobs-facing-misdemeanor-charges-of-battery-criminal-damage-to-property"
+    },
+    {
+      "label": "FantasyPros: Josh Jacobs/MarShawn Lloyd current suspension-risk outlook (Aug. 28)",
+      "url": "https://www.fantasypros.com/2026/08/fantasy-football-outlook-josh-jacobs-marshawn-lloyd-2026/"
+    },
+    {
+      "label": "FantasyPros: TreVeyon Henderson expected good to go Week 1 but currently behind Rhamondre Stevenson (Aug. 27)",
+      "url": "https://www.fantasypros.com/nfl/news/604478/treveyon-henderson-ankle-expected-to-be-good-to-go-week-1.php"
+    },
+    {
+      "label": "FantasyPros: Rhamondre Stevenson lead-back efficiency/role outlook (Aug. 24)",
+      "url": "https://www.fantasypros.com/nfl/notes/419052/rhamondre-stevenson-2026-outlook.php"
+    },
+    {
+      "label": "FantasyPros: TreVeyon Henderson 2025 usage split and efficiency context (Aug. 26)",
+      "url": "https://www.fantasypros.com/nfl/notes/419080/treveyon-henderson-2026-outlook.php"
     }
   ],
   "players": [
@@ -356,10 +376,10 @@
     },
     {
       "name": "Josh Jacobs",
-      "researchDelta": -0.5,
-      "confidenceDelta": -2,
-      "priceCeilingDelta": 3,
-      "note": "Green Bay's GM said the club is preparing for the possibility of a suspension tied to Jacobs' unresolved personal-conduct matter. Because no suspension is announced and his groin has improved, apply only a modest availability-risk discount rather than changing his healthy-game workload projection."
+      "researchDelta": -0.9,
+      "confidenceDelta": -4,
+      "priceCeilingDelta": 6,
+      "note": "Formal misdemeanor battery and criminal-damage charges were filed Aug. 27, moving the issue beyond the prior possibility-only stage. NFL discipline remains uncertain and may not come before Week 1, so increase the availability-risk discount modestly without reducing Jacobs' healthy-game workload projection."
     },
     {
       "name": "Courtland Sutton",
@@ -402,6 +422,20 @@
       "confidenceDelta": 1,
       "priceCeilingDelta": -3,
       "note": "The Boutte trade further clarifies Doubs as New England's primary outside WR2 behind A.J. Brown in a pass-heavier environment than Green Bay. Reward the cleaner route-volume path modestly while keeping him below true alpha treatment."
+    },
+    {
+      "name": "TreVeyon Henderson",
+      "researchDelta": -0.7,
+      "confidenceDelta": -1,
+      "priceCeilingDelta": 4,
+      "note": "The ankle issue is expected to be fine for Week 1, but current reporting still has Henderson behind Rhamondre Stevenson. With Stevenson active in 2025, Henderson averaged 11.2 touches and 57.2 total yards and trailed Stevenson in several per-touch and pass-protection metrics; preserve explosive upside but price him as a committee/upside RB3 rather than assuming a takeover."
+    },
+    {
+      "name": "Rhamondre Stevenson",
+      "researchDelta": 0.7,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -3,
+      "note": "Current New England role reporting favors Stevenson as the lead back, supported by his 2025 advantage over Henderson in explosive run rate, missed-tackle rate, yards after contact, yards per route run and pass protection. Apply only a modest value bump because Henderson remains a talented committee threat."
     }
   ]
 }
