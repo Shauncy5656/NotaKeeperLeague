@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-28",
-  "updatedAt": "2026-08-28T18:03:00Z",
+  "version": "3.0-2026-08-29",
+  "updatedAt": "2026-08-29T17:55:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -196,6 +196,26 @@
     {
       "label": "FantasyPros: TreVeyon Henderson 2025 usage split and efficiency context (Aug. 26)",
       "url": "https://www.fantasypros.com/nfl/notes/419080/treveyon-henderson-2026-outlook.php"
+    },
+    {
+      "label": "NFL: Raiders coach says Jeanty/Washington both preparing to play a lot; Washington ran solely with first team in finale (Aug. 28-29)",
+      "url": "https://www.nfl.com/news/raiders-klint-kubiak-really-excited-about-ashton-jeanty-mike-washington-jr"
+    },
+    {
+      "label": "NFL: Preseason Week 3 Friday role takeaways — Chris Bell priority usage, Makai Lemon debut, Giants RB split (Aug. 29)",
+      "url": "https://www.nfl.com/news/2026-nfl-preseason-week-3-what-we-learned-friday-games"
+    },
+    {
+      "label": "Eagles: Makai Lemon fully healthy after preseason debut; coaching staff expects to count on him in 2026 (Aug. 29)",
+      "url": "https://www.philadelphiaeagles.com/news/makai-lemon-learns-plenty-from-preseason-debut"
+    },
+    {
+      "label": "FantasyPros: 13 current injuries to monitor, including Kraft/Egbuka/Jeanty and Week 1 availability updates (Aug. 29)",
+      "url": "https://www.fantasypros.com/2026/08/13-fantasy-football-injuries-to-monitor-2026/"
+    },
+    {
+      "label": "FantasyPros: Real-Time ADP risers/fallers — Washington/Lloyd/Olave rising; Jeanty/Tyson/Tracy falling (Aug. 29)",
+      "url": "https://www.fantasypros.com/2026/08/15-fantasy-football-adp-risers-fallers-2026/"
     }
   ],
   "players": [
@@ -299,10 +319,10 @@
     },
     {
       "name": "Makai Lemon",
-      "researchDelta": -0.8,
-      "confidenceDelta": -2,
-      "priceCeilingDelta": 6,
-      "note": "Lemon returned to a full practice workload on Monday, including 7-on-7 and 11-on-11 work, materially reducing the hamstring availability concern; keep a smaller discount because his opening role and prior ADP slide still warrant caution."
+      "researchDelta": -0.2,
+      "confidenceDelta": 0,
+      "priceCeilingDelta": 2,
+      "note": "Lemon is now fully healthy and drew five targets in 17 offensive snaps in his preseason debut, with Nick Sirianni saying the Eagles expect to count on him this year. The drop that became an interception and a muffed punt keep the adjustment neutral-to-slightly cautious rather than a full upgrade."
     },
     {
       "name": "Alec Pierce",
@@ -334,17 +354,17 @@
     },
     {
       "name": "Ashton Jeanty",
-      "researchDelta": -1.3,
+      "researchDelta": -1.5,
       "confidenceDelta": -5,
-      "priceCeilingDelta": 7,
-      "note": "The ankle sprain is still viewed as non-long-term, but his Week 1 availability is now uncertain and he missed first-team work Monday; increase the early-season discount modestly without changing the long-term talent outlook."
+      "priceCeilingDelta": 8,
+      "note": "Jeanty is still on the mend from the ankle sprain with Week 1 not yet confirmed, while Mike Washington Jr. handled all first-team work in the preseason finale and Klint Kubiak said both backs are preparing to play a lot. Keep Jeanty as the clear talent lead but trim early workload certainty modestly."
     },
     {
       "name": "Mike Washington Jr.",
-      "researchDelta": 1.8,
-      "confidenceDelta": 3,
-      "priceCeilingDelta": -6,
-      "note": "Washington handled first-team reps while Jeanty was sidelined and scored as a receiver in red-zone work, adding direct role confirmation to his strong preseason efficiency; keep the upgrade contingent on Jeanty's health."
+      "researchDelta": 2.3,
+      "confidenceDelta": 4,
+      "priceCeilingDelta": -8,
+      "note": "Washington ran 8 times for 49 yards with the first team in the finale after earlier preseason bursts of 53 and 33 yards. Kubiak now says both Washington and Jeanty are preparing to play a lot, giving Washington some standalone role value in addition to elite handcuff upside."
     },
     {
       "name": "Tyrone Tracy Jr.",
@@ -404,10 +424,10 @@
     },
     {
       "name": "Emeka Egbuka",
-      "researchDelta": -0.5,
-      "confidenceDelta": -2,
-      "priceCeilingDelta": 3,
-      "note": "Egbuka remained out of Tuesday practice with the toe sprain and the exact return date is still unclear; apply only a small temporary discount because prior reporting still points toward a Week 1 return."
+      "researchDelta": -0.7,
+      "confidenceDelta": -3,
+      "priceCeilingDelta": 4,
+      "note": "Egbuka's toe sprain has now kept him out of team drills for close to two weeks. Week 1 is still the expectation, so only deepen the temporary availability discount slightly rather than changing the season-long role projection."
     },
     {
       "name": "Kayshon Boutte",
@@ -436,6 +456,27 @@
       "confidenceDelta": 2,
       "priceCeilingDelta": -3,
       "note": "Current New England role reporting favors Stevenson as the lead back, supported by his 2025 advantage over Henderson in explosive run rate, missed-tackle rate, yards after contact, yards per route run and pass protection. Apply only a modest value bump because Henderson remains a talented committee threat."
+    },
+    {
+      "name": "Tucker Kraft",
+      "researchDelta": 0.6,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -3,
+      "note": "Kraft has progressed from ACL rehab into 11-on-11 work and is now expected to be a full participant for Week 1. Restore a modest portion of the injury discount while retaining normal post-ACL early-season caution."
+    },
+    {
+      "name": "Chris Bell",
+      "researchDelta": 1.1,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -4,
+      "note": "Miami made Bell a clear preseason-finale priority, targeting him five times on the first three possessions, and NFL reporting described him as a player the Dolphins expect to feature in the passing game. Reward the role signal modestly while keeping rookie/quarterback uncertainty intact."
+    },
+    {
+      "name": "Chris Olave",
+      "researchDelta": 0.7,
+      "confidenceDelta": 2,
+      "priceCeilingDelta": -3,
+      "note": "Jordyn Tyson's hamstring absence into roughly October leaves Olave as New Orleans' unquestioned early-season passing-game focal point. His 2025 WR7 points-per-game finish and top-ten target-share/yardage profile support a modest volume-confidence upgrade without chasing the ADP rise."
     }
   ]
 }
