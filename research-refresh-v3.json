@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "3.0-2026-08-29",
-  "updatedAt": "2026-08-29T17:55:00Z",
+  "version": "3.0-2026-08-30",
+  "updatedAt": "2026-08-30T17:56:00Z",
   "refreshEveryHours": 6,
   "notes": "Curated preseason research overlay. Market rank remains controlled by the live consensus feed; this file only applies modest confidence, research, and price-ceiling adjustments.",
   "sources": [
@@ -216,6 +216,22 @@
     {
       "label": "FantasyPros: Real-Time ADP risers/fallers — Washington/Lloyd/Olave rising; Jeanty/Tyson/Tracy falling (Aug. 29)",
       "url": "https://www.fantasypros.com/2026/08/15-fantasy-football-adp-risers-fallers-2026/"
+    },
+    {
+      "label": "NFL: Preseason Week 3 Saturday — Keenan Allen sharp in Colts debut; Zavion Thomas posts 5-140-1 (Aug. 29)",
+      "url": "https://www.nfl.com/news/2026-nfl-preseason-week-3-what-we-learned-from-saturday-s-games"
+    },
+    {
+      "label": "FantasyPros: Real-Time ADP — Chuba Hubbard, TreVeyon Henderson, Josh Jacobs falling; Diggs/Parker Washington rising (Aug. 30)",
+      "url": "https://www.fantasypros.com/2026/08/30-fantasy-football-adp-risers-fallers-2026/"
+    },
+    {
+      "label": "NBC Sports: George Kittle has had no Achilles setback and is expected back at practice this week (Aug. 30)",
+      "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-08-30/schefter-no-setbacks-for-george-kittle-achilles"
+    },
+    {
+      "label": "FantasyPros: Todd Bowles hopeful Emeka Egbuka will be ready for Week 1 (Aug. 29)",
+      "url": "https://www.fantasypros.com/nfl/news/604651/emeka-egbuka-toe-hopeful-week-1.php"
     }
   ],
   "players": [
@@ -277,17 +293,17 @@
     },
     {
       "name": "Chuba Hubbard",
-      "researchDelta": -0.4,
-      "confidenceDelta": -1,
-      "priceCeilingDelta": 2,
-      "note": "Hubbard remains out of team practice with the hamstring, but he is ahead of schedule, has exceeded 20 mph in return-to-play work and said he would play if there were a game now. Retain only a small early-ramp discount."
+      "researchDelta": -0.8,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 4,
+      "note": "Week 1 availability is still expected, but current market movement and 2025 efficiency context add role risk: Hubbard ranked at or near the bottom of qualifying backs in missed-tackle rate, explosive-run rate and yards after contact, while Jonathon Brooks has earned first-team work. Keep this a modest role/efficiency downgrade rather than an injury-only fade."
     },
     {
       "name": "Jonathon Brooks",
-      "researchDelta": 1.0,
-      "confidenceDelta": 2,
-      "priceCeilingDelta": -3,
-      "note": "Brooks has earned meaningful first-team work and scored with the starters, but Dave Canales said the plan is to continue rotating backs when Hubbard returns. Preserve the role upgrade without pricing in a full takeover."
+      "researchDelta": 1.2,
+      "confidenceDelta": 3,
+      "priceCeilingDelta": -4,
+      "note": "Brooks continues to gain market support while Hubbard carries both a hamstring ramp-up and weak 2025 efficiency profile. Preserve only a modest upgrade because Dave Canales has indicated the backs will rotate rather than guaranteeing Brooks a full takeover."
     },
     {
       "name": "Malik Nabers",
@@ -382,10 +398,10 @@
     },
     {
       "name": "George Kittle",
-      "researchDelta": 0.7,
-      "confidenceDelta": 2,
-      "priceCeilingDelta": -3,
-      "note": "Activation from PUP and a return to padded individual work materially improve his chance to avoid an extended early-season absence, but Achilles recovery and likely ramp-up still cap the upgrade."
+      "researchDelta": 0.9,
+      "confidenceDelta": 3,
+      "priceCeilingDelta": -4,
+      "note": "Kittle has had no setback in his Achilles recovery and is expected to practice this week, which strengthens his early-season availability case. Keep the upgrade modest because Week 1 in Australia is still not guaranteed and a post-Achilles ramp-up remains likely."
     },
     {
       "name": "MarShawn Lloyd",
@@ -424,10 +440,10 @@
     },
     {
       "name": "Emeka Egbuka",
-      "researchDelta": -0.7,
-      "confidenceDelta": -3,
-      "priceCeilingDelta": 4,
-      "note": "Egbuka's toe sprain has now kept him out of team drills for close to two weeks. Week 1 is still the expectation, so only deepen the temporary availability discount slightly rather than changing the season-long role projection."
+      "researchDelta": -0.4,
+      "confidenceDelta": -2,
+      "priceCeilingDelta": 2,
+      "note": "Todd Bowles is now hopeful Egbuka will be ready for Week 1, improving the outlook after nearly two weeks of missed team drills. Retain a small toe-injury/ramp-up discount until full practice participation is confirmed."
     },
     {
       "name": "Kayshon Boutte",
@@ -477,6 +493,13 @@
       "confidenceDelta": 2,
       "priceCeilingDelta": -3,
       "note": "Jordyn Tyson's hamstring absence into roughly October leaves Olave as New Orleans' unquestioned early-season passing-game focal point. His 2025 WR7 points-per-game finish and top-ten target-share/yardage profile support a modest volume-confidence upgrade without chasing the ADP rise."
+    },
+    {
+      "name": "Zavion Thomas",
+      "researchDelta": 0.6,
+      "confidenceDelta": 1,
+      "priceCeilingDelta": -2,
+      "note": "Thomas produced 140 receiving yards and a 97-yard touchdown on five catches in the preseason finale and added a 39-yard punt return, confirming elite field-stretching speed. Keep the bump small because the performance came largely against reserve competition and his regular-season offensive role remains uncertain."
     }
   ]
 }
